@@ -1,0 +1,3314 @@
+Disassembly Listing for dspic33_c_ultimate
+Generated From:
+/home/dracula/MPLABXProjects/dspic33_c_ultimate.X/dist/XC16_dsPIC33FJ128MC804/production/dspic33_c_ultimate.X.production.elf
+Jan 8, 2017 1:15:07 AM
+
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/vector.c  ----------------------------------------
+1:                 /*
+2:                  * File:   vector.c
+3:                  * Author: dracula
+4:                  *
+5:                  * Created on December 28, 2016, 10:26 PM
+6:                  */
+7:                 //#include "xc.h"
+8:                 #include "user.h"
+9:                 extern int countVector;
+10:                extern Vector3f *pointerVector[];
+11:                Vector3f *v_constructor(Vector3f*v, float x, float y, float z)
+12:                {
+00180C  FA000E     LNK #0xE
+00180E  781F88     MOV W8, [W15++]
+001810  780F00     MOV W0, [W14]
+001812  980712     MOV W2, [W14+2]
+001814  980723     MOV W3, [W14+4]
+001816  980734     MOV W4, [W14+6]
+001818  980745     MOV W5, [W14+8]
+00181A  980756     MOV W6, [W14+10]
+00181C  980767     MOV W7, [W14+12]
+13:                    if(v == NULL)
+00181E  78001E     MOV [W14], W0
+001820  E00000     CP0 W0
+001822  3A0010     BRA NZ, 0x1844
+14:                    {
+15:                        pointerVector[countVector] = (Vector3f*)malloc(sizeof(Vector3f));
+001824  804048     MOV countVector, W8
+001826  2001E0     MOV #0x1E, W0
+001828  07F89D     RCALL 0x964
+00182A  780080     MOV W0, W1
+00182C  440108     ADD W8, W8, W2
+00182E  208280     MOV #0x828, W0
+001830  410000     ADD W2, W0, W0
+001832  780801     MOV W1, [W0]
+16:                        v = pointerVector[countVector];
+001834  804040     MOV countVector, W0
+001836  400080     ADD W0, W0, W1
+001838  208280     MOV #0x828, W0
+00183A  408000     ADD W1, W0, W0
+00183C  780F10     MOV [W0], [W14]
+17:                        countVector++;
+00183E  804040     MOV countVector, W0
+001840  E80000     INC W0, W0
+001842  884040     MOV W0, countVector
+18:                    }
+19:                        /*
+20:                    Vector3f *w;
+21:                    if(v == NULL)
+22:                    {
+23:                        v = w;
+24:                    }
+25:                    */
+26:                    v->x = x;
+001844  78001E     MOV [W14], W0
+001846  90011E     MOV [W14+2], W2
+001848  9001AE     MOV [W14+4], W3
+00184A  BE8802     MOV.D W2, [W0]
+27:                    v->y = y;
+00184C  78001E     MOV [W14], W0
+00184E  90013E     MOV [W14+6], W2
+001850  9001CE     MOV [W14+8], W3
+001852  980022     MOV W2, [W0+4]
+001854  980033     MOV W3, [W0+6]
+28:                    v->z = z;
+001856  78001E     MOV [W14], W0
+001858  90015E     MOV [W14+10], W2
+00185A  9001EE     MOV [W14+12], W3
+00185C  980042     MOV W2, [W0+8]
+00185E  980053     MOV W3, [W0+10]
+29:                    v->v_plus = v_plus;
+001860  78001E     MOV [W14], W0
+001862  218A61     MOV #0x18A6, W1
+001864  980801     MOV W1, [W0+16]
+30:                    v->v_minus = v_minus;
+001866  78001E     MOV [W14], W0
+001868  218F81     MOV #0x18F8, W1
+00186A  980811     MOV W1, [W0+18]
+31:                    v->v_v_multiply = v_v_multiply;
+00186C  78001E     MOV [W14], W0
+00186E  2194A1     MOV #0x194A, W1
+001870  980821     MOV W1, [W0+20]
+32:                    v->v_s_multiply = v_s_multiply;
+001872  78001E     MOV [W14], W0
+001874  2199A1     MOV #0x199A, W1
+001876  980831     MOV W1, [W0+22]
+33:                    v->v_equal = v_equal;
+001878  78001E     MOV [W14], W0
+00187A  219DE1     MOV #0x19DE, W1
+00187C  980841     MOV W1, [W0+24]
+34:                    v->v_length = v_length;
+00187E  78001E     MOV [W14], W0
+001880  21A0A1     MOV #0x1A0A, W1
+001882  980851     MOV W1, [W0+26]
+35:                    v->v_normalize = v_normalize;
+001884  78001E     MOV [W14], W0
+001886  21A5A1     MOV #0x1A5A, W1
+001888  980861     MOV W1, [W0+28]
+36:                    return v;
+00188A  78001E     MOV [W14], W0
+37:                }
+00188C  78044F     MOV [--W15], W8
+00188E  FA8000     ULNK
+001890  060000     RETURN
+38:                
+39:                void v_destructor(Vector3f*v, bool dynamic)
+40:                {
+001892  FA0004     LNK #0x4
+001894  780F00     MOV W0, [W14]
+001896  984721     MOV.B W1, [W14+2]
+41:                    if(dynamic)
+001898  90402E     MOV.B [W14+2], W0
+00189A  E00400     CP0.B W0
+00189C  320002     BRA Z, 0x18A2
+42:                    {
+43:                        free(v);
+00189E  78001E     MOV [W14], W0
+0018A0  07F7FC     RCALL 0x89A
+44:                    }
+45:                }
+0018A2  FA8000     ULNK
+0018A4  060000     RETURN
+46:                
+47:                Vector3f *v_plus(Vector3f*v,Vector3f*w)
+48:                {
+0018A6  FA0004     LNK #0x4
+0018A8  BE9F88     MOV.D W8, [W15++]
+0018AA  BE9F8A     MOV.D W10, [W15++]
+0018AC  780F00     MOV W0, [W14]
+0018AE  980711     MOV W1, [W14+2]
+49:                    //Vector3f *temp = NULL;
+50:                    return v_constructor(NULL, v->x + w->x, v->y + w->y, v->z + w->z);
+0018B0  78001E     MOV [W14], W0
+0018B2  900240     MOV [W0+8], W4
+0018B4  9002D0     MOV [W0+10], W5
+0018B6  90001E     MOV [W14+2], W0
+0018B8  9000D0     MOV [W0+10], W1
+0018BA  900040     MOV [W0+8], W0
+0018BC  BE0100     MOV.D W0, W2
+0018BE  BE0004     MOV.D W4, W0
+0018C0  07F553     RCALL 0x368
+0018C2  BE0500     MOV.D W0, W10
+0018C4  78001E     MOV [W14], W0
+0018C6  900220     MOV [W0+4], W4
+0018C8  9002B0     MOV [W0+6], W5
+0018CA  90001E     MOV [W14+2], W0
+0018CC  9000B0     MOV [W0+6], W1
+0018CE  900020     MOV [W0+4], W0
+0018D0  BE0100     MOV.D W0, W2
+0018D2  BE0004     MOV.D W4, W0
+0018D4  07F549     RCALL 0x368
+0018D6  BE0400     MOV.D W0, W8
+0018D8  78001E     MOV [W14], W0
+0018DA  BE0210     MOV.D [W0], W4
+0018DC  90001E     MOV [W14+2], W0
+0018DE  BE0010     MOV.D [W0], W0
+0018E0  BE0100     MOV.D W0, W2
+0018E2  BE0004     MOV.D W4, W0
+0018E4  07F541     RCALL 0x368
+0018E6  BE030A     MOV.D W10, W6
+0018E8  BE0208     MOV.D W8, W4
+0018EA  BE0100     MOV.D W0, W2
+0018EC  EB0000     CLR W0
+0018EE  07FF8E     RCALL v_constructor
+51:                }
+0018F0  BE054F     MOV.D [--W15], W10
+0018F2  BE044F     MOV.D [--W15], W8
+0018F4  FA8000     ULNK
+0018F6  060000     RETURN
+52:                
+53:                Vector3f *v_minus(Vector3f*v,Vector3f*w)
+54:                {
+0018F8  FA0004     LNK #0x4
+0018FA  BE9F88     MOV.D W8, [W15++]
+0018FC  BE9F8A     MOV.D W10, [W15++]
+0018FE  780F00     MOV W0, [W14]
+001900  980711     MOV W1, [W14+2]
+55:                    //Vector3f *temp = NULL;
+56:                    return v_constructor(NULL, v->x - w->x, v->y - w->y, v->z - w->z);
+001902  78001E     MOV [W14], W0
+001904  900240     MOV [W0+8], W4
+001906  9002D0     MOV [W0+10], W5
+001908  90001E     MOV [W14+2], W0
+00190A  9000D0     MOV [W0+10], W1
+00190C  900040     MOV [W0+8], W0
+00190E  BE0100     MOV.D W0, W2
+001910  BE0004     MOV.D W4, W0
+001912  07F529     RCALL 0x366
+001914  BE0500     MOV.D W0, W10
+001916  78001E     MOV [W14], W0
+001918  900220     MOV [W0+4], W4
+00191A  9002B0     MOV [W0+6], W5
+00191C  90001E     MOV [W14+2], W0
+00191E  9000B0     MOV [W0+6], W1
+001920  900020     MOV [W0+4], W0
+001922  BE0100     MOV.D W0, W2
+001924  BE0004     MOV.D W4, W0
+001926  07F51F     RCALL 0x366
+001928  BE0400     MOV.D W0, W8
+00192A  78001E     MOV [W14], W0
+00192C  BE0210     MOV.D [W0], W4
+00192E  90001E     MOV [W14+2], W0
+001930  BE0010     MOV.D [W0], W0
+001932  BE0100     MOV.D W0, W2
+001934  BE0004     MOV.D W4, W0
+001936  07F517     RCALL 0x366
+001938  BE030A     MOV.D W10, W6
+00193A  BE0208     MOV.D W8, W4
+00193C  BE0100     MOV.D W0, W2
+00193E  EB0000     CLR W0
+001940  07FF65     RCALL v_constructor
+57:                }
+001942  BE054F     MOV.D [--W15], W10
+001944  BE044F     MOV.D [--W15], W8
+001946  FA8000     ULNK
+001948  060000     RETURN
+58:                
+59:                float v_v_multiply(Vector3f*v,Vector3f*w)
+60:                {
+00194A  FA0004     LNK #0x4
+00194C  BE9F88     MOV.D W8, [W15++]
+00194E  780F00     MOV W0, [W14]
+001950  980711     MOV W1, [W14+2]
+61:                    return v->x * w->x + v->y * w->y + v->z * w->z;
+001952  78001E     MOV [W14], W0
+001954  BE0210     MOV.D [W0], W4
+001956  90001E     MOV [W14+2], W0
+001958  BE0010     MOV.D [W0], W0
+00195A  BE0100     MOV.D W0, W2
+00195C  BE0004     MOV.D W4, W0
+00195E  07F5E3     RCALL 0x526
+001960  BE0400     MOV.D W0, W8
+001962  78001E     MOV [W14], W0
+001964  900220     MOV [W0+4], W4
+001966  9002B0     MOV [W0+6], W5
+001968  90001E     MOV [W14+2], W0
+00196A  9000B0     MOV [W0+6], W1
+00196C  900020     MOV [W0+4], W0
+00196E  BE0100     MOV.D W0, W2
+001970  BE0004     MOV.D W4, W0
+001972  07F5D9     RCALL 0x526
+001974  BE0100     MOV.D W0, W2
+001976  BE0008     MOV.D W8, W0
+001978  07F4F7     RCALL 0x368
+00197A  BE0400     MOV.D W0, W8
+00197C  78001E     MOV [W14], W0
+00197E  900240     MOV [W0+8], W4
+001980  9002D0     MOV [W0+10], W5
+001982  90001E     MOV [W14+2], W0
+001984  9000D0     MOV [W0+10], W1
+001986  900040     MOV [W0+8], W0
+001988  BE0100     MOV.D W0, W2
+00198A  BE0004     MOV.D W4, W0
+00198C  07F5CC     RCALL 0x526
+00198E  BE0100     MOV.D W0, W2
+001990  BE0008     MOV.D W8, W0
+001992  07F4EA     RCALL 0x368
+62:                }
+001994  BE044F     MOV.D [--W15], W8
+001996  FA8000     ULNK
+001998  060000     RETURN
+63:                
+64:                Vector3f *v_s_multiply(Vector3f*v,float s)
+65:                {
+00199A  FA0006     LNK #0x6
+00199C  BE9F88     MOV.D W8, [W15++]
+00199E  BE9F8A     MOV.D W10, [W15++]
+0019A0  780F00     MOV W0, [W14]
+0019A2  980712     MOV W2, [W14+2]
+0019A4  980723     MOV W3, [W14+4]
+66:                    //Vector3f *temp = NULL;
+67:                    return v_constructor(NULL, v->x * s, v->y * s, v->z * s);
+0019A6  78001E     MOV [W14], W0
+0019A8  9000D0     MOV [W0+10], W1
+0019AA  900040     MOV [W0+8], W0
+0019AC  90011E     MOV [W14+2], W2
+0019AE  9001AE     MOV [W14+4], W3
+0019B0  07F5BA     RCALL 0x526
+0019B2  BE0500     MOV.D W0, W10
+0019B4  78001E     MOV [W14], W0
+0019B6  9000B0     MOV [W0+6], W1
+0019B8  900020     MOV [W0+4], W0
+0019BA  90011E     MOV [W14+2], W2
+0019BC  9001AE     MOV [W14+4], W3
+0019BE  07F5B3     RCALL 0x526
+0019C0  BE0400     MOV.D W0, W8
+0019C2  78001E     MOV [W14], W0
+0019C4  BE0010     MOV.D [W0], W0
+0019C6  90011E     MOV [W14+2], W2
+0019C8  9001AE     MOV [W14+4], W3
+0019CA  07F5AD     RCALL 0x526
+0019CC  BE030A     MOV.D W10, W6
+0019CE  BE0208     MOV.D W8, W4
+0019D0  BE0100     MOV.D W0, W2
+0019D2  EB0000     CLR W0
+0019D4  07FF1B     RCALL v_constructor
+68:                }
+0019D6  BE054F     MOV.D [--W15], W10
+0019D8  BE044F     MOV.D [--W15], W8
+0019DA  FA8000     ULNK
+0019DC  060000     RETURN
+69:                
+70:                Vector3f *v_equal(Vector3f*v,Vector3f*w)
+71:                {
+0019DE  FA0004     LNK #0x4
+0019E0  780F00     MOV W0, [W14]
+0019E2  980711     MOV W1, [W14+2]
+72:                    v->x = w->x;
+0019E4  90001E     MOV [W14+2], W0
+0019E6  BE0010     MOV.D [W0], W0
+0019E8  78011E     MOV [W14], W2
+0019EA  BE8900     MOV.D W0, [W2]
+73:                    v->y = w->y;
+0019EC  90001E     MOV [W14+2], W0
+0019EE  9000B0     MOV [W0+6], W1
+0019F0  900020     MOV [W0+4], W0
+0019F2  78011E     MOV [W14], W2
+0019F4  980120     MOV W0, [W2+4]
+0019F6  980131     MOV W1, [W2+6]
+74:                    v->z = w->z;
+0019F8  90001E     MOV [W14+2], W0
+0019FA  9000D0     MOV [W0+10], W1
+0019FC  900040     MOV [W0+8], W0
+0019FE  78011E     MOV [W14], W2
+001A00  980140     MOV W0, [W2+8]
+001A02  980151     MOV W1, [W2+10]
+75:                    return v;
+001A04  78001E     MOV [W14], W0
+76:                }
+001A06  FA8000     ULNK
+001A08  060000     RETURN
+77:                
+78:                float v_length(Vector3f*v)
+79:                {
+001A0A  FA0002     LNK #0x2
+001A0C  BE9F88     MOV.D W8, [W15++]
+001A0E  780F00     MOV W0, [W14]
+80:                    return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+001A10  78001E     MOV [W14], W0
+001A12  BE0210     MOV.D [W0], W4
+001A14  78001E     MOV [W14], W0
+001A16  BE0010     MOV.D [W0], W0
+001A18  BE0100     MOV.D W0, W2
+001A1A  BE0004     MOV.D W4, W0
+001A1C  07F584     RCALL 0x526
+001A1E  BE0400     MOV.D W0, W8
+001A20  78001E     MOV [W14], W0
+001A22  900220     MOV [W0+4], W4
+001A24  9002B0     MOV [W0+6], W5
+001A26  78001E     MOV [W14], W0
+001A28  9000B0     MOV [W0+6], W1
+001A2A  900020     MOV [W0+4], W0
+001A2C  BE0100     MOV.D W0, W2
+001A2E  BE0004     MOV.D W4, W0
+001A30  07F57A     RCALL 0x526
+001A32  BE0100     MOV.D W0, W2
+001A34  BE0008     MOV.D W8, W0
+001A36  07F498     RCALL 0x368
+001A38  BE0400     MOV.D W0, W8
+001A3A  78001E     MOV [W14], W0
+001A3C  900240     MOV [W0+8], W4
+001A3E  9002D0     MOV [W0+10], W5
+001A40  78001E     MOV [W14], W0
+001A42  9000D0     MOV [W0+10], W1
+001A44  900040     MOV [W0+8], W0
+001A46  BE0100     MOV.D W0, W2
+001A48  BE0004     MOV.D W4, W0
+001A4A  07F56D     RCALL 0x526
+001A4C  BE0100     MOV.D W0, W2
+001A4E  BE0008     MOV.D W8, W0
+001A50  07F48B     RCALL 0x368
+001A52  07F608     RCALL 0x664
+81:                }
+001A54  BE044F     MOV.D [--W15], W8
+001A56  FA8000     ULNK
+001A58  060000     RETURN
+82:                
+83:                void v_normalize(Vector3f*v)
+84:                {
+001A5A  FA0006     LNK #0x6
+001A5C  980720     MOV W0, [W14+4]
+85:                    float len = v_length(v);
+001A5E  90002E     MOV [W14+4], W0
+001A60  07FFD4     RCALL v_length
+001A62  BE8F00     MOV.D W0, [W14]
+86:                    v->x /= len;
+001A64  90002E     MOV [W14+4], W0
+001A66  BE0010     MOV.D [W0], W0
+001A68  BE011E     MOV.D [W14], W2
+001A6A  07F4DD     RCALL 0x426
+001A6C  90012E     MOV [W14+4], W2
+001A6E  BE8900     MOV.D W0, [W2]
+87:                    v->y /= len;
+001A70  90002E     MOV [W14+4], W0
+001A72  9000B0     MOV [W0+6], W1
+001A74  900020     MOV [W0+4], W0
+001A76  BE011E     MOV.D [W14], W2
+001A78  07F4D6     RCALL 0x426
+001A7A  90012E     MOV [W14+4], W2
+001A7C  980120     MOV W0, [W2+4]
+001A7E  980131     MOV W1, [W2+6]
+88:                    v->z /= len;
+001A80  90002E     MOV [W14+4], W0
+001A82  9000D0     MOV [W0+10], W1
+001A84  900040     MOV [W0+8], W0
+001A86  BE011E     MOV.D [W14], W2
+001A88  07F4CE     RCALL 0x426
+001A8A  90012E     MOV [W14+4], W2
+001A8C  980140     MOV W0, [W2+8]
+001A8E  980151     MOV W1, [W2+10]
+89:                }
+001A90  FA8000     ULNK
+001A92  060000     RETURN
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/user.c  ------------------------------------------
+1:                 /******************************************************************************/
+2:                 /* Files to Include                                                           */
+3:                 /******************************************************************************/
+4:                 
+5:                 /* Device header file */
+6:                 #if defined(__XC16__)
+7:                     #include <xc.h>
+8:                 #elif defined(__C30__)
+9:                     #if defined(__dsPIC33E__)
+10:                    	#include <p33Exxxx.h>
+11:                    #elif defined(__dsPIC33F__)
+12:                    	#include <p33Fxxxx.h>
+13:                    #endif
+14:                #endif
+15:                
+16:                #include <stdint.h>          /* For uint16_t definition                       */
+17:                #include <stdbool.h>         /* For true/false definition                     */
+18:                
+19:                #include "user.h"            /* variables/params used by user.c               */
+20:                
+21:                #define FCY 40000000
+22:                #define BAUDRATE 57600//9600  
+23:                #define BRGVAL ((FCY/BAUDRATE)/16)-1
+24:                #define DELAY_105us ams volatile ("REPEAT,#4201");Nop();//105us delay 
+25:                /******************************************************************************/
+26:                /* User Functions                                                             */
+27:                /******************************************************************************/
+28:                
+29:                /* <Initialize variables in user.h and insert code for user algorithms.> */
+30:                
+31:                void InitApp(void)
+32:                {
+001A94  FA0000     LNK #0x0
+33:                    /* TODO Initialize User Ports/Peripherals/Project here */
+34:                    //*************************************************************
+35:                    // Unlock Registers
+36:                    //*************************************************************
+37:                    __builtin_write_OSCCONL(OSCCON & ~(1<<6)); 
+001A96  803A11     MOV OSCCON, W1
+001A98  2FFBF0     MOV #0xFFBF, W0
+001A9A  608100     AND W1, W0, W2
+001A9C  200460     MOV #0x46, W0
+001A9E  200571     MOV #0x57, W1
+001AA0  207423     MOV #0x742, W3
+001AA2  784980     MOV.B W0, [W3]
+001AA4  784981     MOV.B W1, [W3]
+001AA6  784982     MOV.B W2, [W3]
+38:                
+39:                    //*************************************************************
+40:                    // Configure Input Functions
+41:                    // (See Table 30-1)
+42:                    //*************************************************************
+43:                    //*******************************
+44:                    // Assign U1Rx To Pin RP0
+45:                    //***************************
+46:                    //RPINR18bits.U1RXR = 0;
+47:                    RPINR18bits.U1RXR = 4;
+001AA8  803521     MOV RPINR18, W1
+001AAA  2FFE00     MOV #0xFFE0, W0
+001AAC  608000     AND W1, W0, W0
+001AAE  A02000     BSET W0, #2
+001AB0  883520     MOV W0, RPINR18
+48:                    
+49:                    //***************************
+50:                    // Assign U1CTS To Pin RP1
+51:                    //***************************
+52:                    //RPINR18bits.U1CTSR = 1;
+53:                    
+54:                    //*************************************************************
+55:                    // Configure Output Functions
+56:                    // (See Table 30-2)
+57:                    //*************************************************************
+58:                    //***************************
+59:                    // Assign U1Tx To Pin RP2
+60:                    //***************************
+61:                    //RPOR1bits.RP2R = 3;
+62:                    RPOR0bits.RP0R = 3;
+001AB2  803601     MOV RPOR0, W1
+001AB4  2FFE00     MOV #0xFFE0, W0
+001AB6  608000     AND W1, W0, W0
+001AB8  B30030     IOR #0x3, W0
+001ABA  883600     MOV W0, RPOR0
+63:                    
+64:                    //***************************
+65:                    // Assign U1RTS To Pin RP3
+66:                    //***************************
+67:                    //RPOR1bits.RP3R = 4;
+68:                    
+69:                    //*************************************************************
+70:                    // Lock Registers
+71:                    //*************************************************************
+72:                    __builtin_write_OSCCONL(OSCCON | (1<<6));
+001ABC  803A11     MOV OSCCON, W1
+001ABE  200400     MOV #0x40, W0
+001AC0  700101     IOR W0, W1, W2
+001AC2  200460     MOV #0x46, W0
+001AC4  200571     MOV #0x57, W1
+001AC6  207423     MOV #0x742, W3
+001AC8  784980     MOV.B W0, [W3]
+001ACA  784981     MOV.B W1, [W3]
+001ACC  784982     MOV.B W2, [W3]
+73:                
+74:                    /* Setup analog functionality and port direction */
+75:                    TRISAbits.TRISA0=0;
+001ACE  A902C0     BCLR TRISA, #0
+76:                    TRISAbits.TRISA1=0;
+001AD0  A922C0     BCLR TRISA, #1
+77:                    
+78:                    TRISAbits.TRISA4=0;
+001AD2  A982C0     BCLR TRISA, #4
+79:                    TRISAbits.TRISA7=0;
+001AD4  A9E2C0     BCLR TRISA, #7
+80:                    
+81:                    TRISAbits.TRISA8=0;
+001AD6  A902C1     BCLR 0x2C1, #0
+82:                    TRISAbits.TRISA9=0;
+001AD8  A922C1     BCLR 0x2C1, #1
+83:                    /*
+84:                    TRISAbits.TRISA0 = 0;
+85:                    TRISAbits.TRISA1 = 0;
+86:                    TRISBbits.TRISB2 = 1;
+87:                    TRISBbits.TRISB5 = 1;
+88:                    */
+89:                    //TRISB = 0xFFFF;
+90:                    /* Initialize peripherals */
+91:                    PwmInit();
+001ADA  070003     RCALL PwmInit
+92:                    UartInit();
+001ADC  070016     RCALL UartInit
+93:                }
+001ADE  FA8000     ULNK
+001AE0  060000     RETURN
+94:                
+95:                void PwmInit(void)
+96:                {
+001AE2  FA0000     LNK #0x0
+97:                #if 1
+98:                    /*
+99:                     * PxTPER = FCY/(FPWM*PxTMR PreScaler)-1
+100:                    * PxTMR PreScaler=1:1
+101:                    * FPWM=20KHz
+102:                    * FCY=40MHz, refer to function ConfigureOscillator
+103:                    * PxTPER=1999
+104:                    * 0x07CF
+105:                    * 0b0000 0111 1100 1111
+106:                    */
+107:                   P1TCON=0x8000;   //or P1TCONbits.PTEN = 1;
+001AE4  280000     MOV #0x8000, W0
+001AE6  880E00     MOV W0, P1TCON
+108:                   P1TMR=0x0000;
+001AE8  EF21C2     CLR P1TMR
+109:                   P1TPER=1999;     // period:50us
+001AEA  207CF0     MOV #0x7CF, W0
+001AEC  880E20     MOV W0, P1TPER
+110:                   //P1SECMP=0x0000;
+111:                   PWM1CON1=0x0FFF;
+001AEE  20FFF0     MOV #0xFFF, W0
+001AF0  880E40     MOV W0, PWM1CON1
+112:                   PWM1CON2=0x0040;
+001AF2  200400     MOV #0x40, W0
+001AF4  880E50     MOV W0, PWM1CON2
+113:                   P1OVDCON=0xFF00;
+001AF6  2FF000     MOV #0xFF00, W0
+001AF8  880EA0     MOV W0, OVDCON
+114:                   //P1FLTACON=0x0080;
+115:                   //P1DTCON1=0x0000;
+116:                   //P1DTCON2=0x0000;
+117:                   P1DC1=100;
+001AFA  200640     MOV #0x64, W0
+001AFC  880EB0     MOV W0, P1DC1
+118:                   P1DC2=200;
+001AFE  200C80     MOV #0xC8, W0
+001B00  880EC0     MOV W0, P1DC2
+119:                   P1DC3=1000;
+001B02  203E80     MOV #0x3E8, W0
+001B04  880ED0     MOV W0, P1DC3
+120:                   // LSB is not used for duty cycle, the realy duty cycle count should be PIDC*/2 !!!!!!
+121:               #endif
+122:                   
+123:               #if 0
+124:               /* Configuration register FPOR */
+125:               
+126:               /* PWM time base operates in a Free Running mode */
+127:               P1TCONbits.PTMOD = 0b00;
+128:               
+129:               /* PWM time base input clock period is TCY (1:1 prescale) */
+130:               /* PWM time base output post scale is 1:1 */
+131:               P1TCONbits.PTCKPS = 0b00;
+132:               P1TCONbits.PTOPS = 0b00;
+133:               
+134:               /* Choose PWM time period based on input clock selected */
+135:               /* Refer to Equation: PxTPER=FCY/(FPWM × PxTMR PreScaler)-1*/
+136:               /* PWM switching frequency is 20 kHz */
+137:               /* FCY is 40 MHz */
+138:               P1TPER = 1999;
+139:               
+140:               /* PWM I/O pairs 1 to 3 are in complementary mode */
+141:               /* PWM pins are enabled for PWM output */
+142:               PWM1CON1bits.PMOD1 = 0;
+143:               PWM1CON1bits.PMOD2 = 0;
+144:               PWM1CON1bits.PMOD3 = 0;
+145:               PWM1CON1bits.PEN1H = 1;
+146:               PWM1CON1bits.PEN2H = 1;
+147:               PWM1CON1bits.PEN3H = 1;
+148:               PWM1CON1bits.PEN1L = 1;
+149:               PWM1CON1bits.PEN2L = 1;
+150:               PWM1CON1bits.PEN3L = 1;
+151:               /* Immediate update of PWM enabled */
+152:               PWM1CON2bits.IUE = 1;
+153:               
+154:               /* PWM I/O pin controlled by PWM Generator */
+155:               P1OVDCONbits.POVD3H = 1;
+156:               P1OVDCONbits.POVD2H = 1;
+157:               P1OVDCONbits.POVD1H = 1;
+158:               P1OVDCONbits.POVD3L = 1;
+159:               P1OVDCONbits.POVD2L = 1;
+160:               P1OVDCONbits.POVD1L = 1;
+161:               
+162:               /* Initialize duty cycle values for PWM1, PWM2 and PWM3 signals */
+163:               P1DC1 = 200;
+164:               P1DC2 = 200;
+165:               P1DC3 = 200;
+166:               P1TCONbits.PTEN = 1;
+167:               #endif
+168:               }
+001B06  FA8000     ULNK
+001B08  060000     RETURN
+169:               
+170:               void UartInit(void)
+171:               {
+001B0A  FA0002     LNK #0x2
+172:                   int i;
+173:                   U1MODEbits.STSEL = 0; // 1-stop bit
+001B0C  A90220     BCLR U1MODE, #0
+174:                   U1MODEbits.PDSEL = 0; // No Parity, 8-data bits
+001B0E  801100     MOV U1MODE, W0
+001B10  A11000     BCLR W0, #1
+001B12  A12000     BCLR W0, #2
+001B14  881100     MOV W0, U1MODE
+175:                   U1MODEbits.ABAUD = 0; // Auto-Baud Disabled
+001B16  A9A220     BCLR U1MODE, #5
+176:                   U1MODEbits.BRGH = 0; // Low Speed mode
+001B18  A96220     BCLR U1MODE, #3
+177:                   U1MODEbits.LPBACK = 0;
+001B1A  A9C220     BCLR U1MODE, #6
+178:                   U1BRG = BRGVAL; // BAUD Rate Setting for 9600
+001B1C  2002A0     MOV #0x2A, W0
+001B1E  881140     MOV W0, U1BRG
+179:                   U1STAbits.UTXISEL0 = 0; // Interrupt after one Tx character is transmitted
+001B20  A9A223     BCLR 0x223, #5
+180:                   U1STAbits.UTXISEL1 = 0;
+001B22  A9E223     BCLR 0x223, #7
+181:                   U1STAbits.URXISEL = 0;
+001B24  801110     MOV U1STA, W0
+001B26  A16000     BCLR W0, #6
+001B28  A17000     BCLR W0, #7
+001B2A  881110     MOV W0, U1STA
+182:                   IEC0bits.U1TXIE = 1; // Enable UART Tx interrupt
+001B2C  A88095     BSET 0x95, #4
+183:                   IEC0bits.U1RXIE = 1; // Enable UART Rx interrupt
+001B2E  A86095     BSET 0x95, #3
+184:                   U1MODEbits.UARTEN = 1; // Enable UART
+001B30  A8E221     BSET 0x221, #7
+185:                   U1STAbits.UTXEN = 1; // Enable UART Tx
+001B32  A84223     BSET 0x223, #2
+186:                   /* wait at least 104 usec (1/9600) before sending first char */
+187:                   //DELAY_105us
+188:                   for(i = 0; i < 4160; i++)
+001B34  EB0000     CLR W0
+001B36  780F00     MOV W0, [W14]
+001B38  370002     BRA 0x1B3E
+001B3C  E80F1E     INC [W14], [W14]
+001B3E  2103F0     MOV #0x103F, W0
+001B40  78009E     MOV [W14], W1
+001B42  508F80     SUB W1, W0, [W15]
+001B44  34FFFA     BRA LE, 0x1B3A
+189:                   {
+190:                   Nop();
+001B3A  000000     NOP
+191:                   }
+192:               
+193:               }
+001B46  FA8000     ULNK
+001B48  060000     RETURN
+194:               
+195:               void Delay(int i)
+196:               {
+001B4A  FA0004     LNK #0x4
+001B4C  980710     MOV W0, [W14+2]
+197:                   int j=0;
+001B4E  EB0000     CLR W0
+001B50  780F00     MOV W0, [W14]
+198:                   for(j=0;j<i;j++);
+001B52  EB0000     CLR W0
+001B54  780F00     MOV W0, [W14]
+001B56  370001     BRA 0x1B5A
+001B58  E80F1E     INC [W14], [W14]
+001B5A  90001E     MOV [W14+2], W0
+001B5C  78009E     MOV [W14], W1
+001B5E  508F80     SUB W1, W0, [W15]
+001B60  35FFFB     BRA LT, 0x1B58
+199:               }
+001B62  FA8000     ULNK
+001B64  060000     RETURN
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/traps.c  -----------------------------------------
+1:                 /******************************************************************************/
+2:                 /* Files to Include                                                           */
+3:                 /******************************************************************************/
+4:                 
+5:                 /* Device header file */
+6:                 #if defined(__XC16__)
+7:                     #include <xc.h>
+8:                 #elif defined(__C30__)
+9:                     #if defined(__dsPIC33E__)
+10:                    	#include <p33Exxxx.h>
+11:                    #elif defined(__dsPIC33F__)
+12:                    	#include <p33Fxxxx.h>
+13:                    #endif
+14:                #endif
+15:                
+16:                #include <stdint.h>        /* Includes uint16_t definition */
+17:                #include <stdbool.h>       /* Includes true/false definition */
+18:                
+19:                /******************************************************************************/
+20:                /* Trap Function Prototypes                                                   */
+21:                /******************************************************************************/
+22:                
+23:                /* <Other function prototypes for debugging trap code may be inserted here>   */
+24:                
+25:                /* Use if INTCON2 ALTIVT=1 */
+26:                void __attribute__((interrupt,no_auto_psv)) _OscillatorFail(void);
+27:                void __attribute__((interrupt,no_auto_psv)) _AddressError(void);
+28:                void __attribute__((interrupt,no_auto_psv)) _StackError(void);
+29:                void __attribute__((interrupt,no_auto_psv)) _MathError(void);
+30:                
+31:                #if defined(__HAS_DMA__)
+32:                
+33:                void __attribute__((interrupt,no_auto_psv)) _DMACError(void);
+34:                
+35:                #endif
+36:                
+37:                #if defined(__dsPIC33F__)
+38:                
+39:                /* Use if INTCON2 ALTIVT=0 */
+40:                void __attribute__((interrupt,no_auto_psv)) _AltOscillatorFail(void);
+41:                void __attribute__((interrupt,no_auto_psv)) _AltAddressError(void);
+42:                void __attribute__((interrupt,no_auto_psv)) _AltStackError(void);
+43:                void __attribute__((interrupt,no_auto_psv)) _AltMathError(void);
+44:                
+45:                    #if defined(__HAS_DMA__)
+46:                
+47:                    void __attribute__((interrupt,no_auto_psv)) _AltDMACError(void);
+48:                
+49:                    #endif
+50:                
+51:                #endif
+52:                
+53:                /* Default interrupt handler */
+54:                void __attribute__((interrupt,no_auto_psv)) _DefaultInterrupt(void);
+55:                
+56:                #if defined(__dsPIC33E__)
+57:                
+58:                /* These are additional traps in the 33E family.  Refer to the PIC33E
+59:                migration guide.  There are no Alternate Vectors in the 33E family. */
+60:                void __attribute__((interrupt,no_auto_psv)) _HardTrapError(void);
+61:                void __attribute__((interrupt,no_auto_psv)) _SoftTrapError(void);
+62:                
+63:                #endif
+64:                
+65:                /******************************************************************************/
+66:                /* Trap Handling                                                              */
+67:                /*                                                                            */
+68:                /* These trap routines simply ensure that the device continuously loops       */
+69:                /* within each routine.  Users who actually experience one of these traps     */
+70:                /* can add code to handle the error.  Some basic examples for trap code,      */
+71:                /* including assembly routines that process trap sources, are available at    */
+72:                /* www.microchip.com/codeexamples                                             */
+73:                /******************************************************************************/
+74:                
+75:                /* Primary (non-alternate) address error trap function declarations */
+76:                void __attribute__((interrupt,no_auto_psv)) _OscillatorFail(void)
+77:                {
+0002E4  FA0000     LNK #0x0
+78:                        INTCON1bits.OSCFAIL = 0;        /* Clear the trap flag */
+0002E6  A92080     BCLR INTCON1, #1
+79:                        while(1);
+0002E8  37FFFF     BRA 0x2E8
+80:                }
+81:                
+82:                void __attribute__((interrupt,no_auto_psv)) _AddressError(void)
+83:                {
+0002EA  FA0000     LNK #0x0
+84:                        INTCON1bits.ADDRERR = 0;        /* Clear the trap flag */
+0002EC  A96080     BCLR INTCON1, #3
+85:                        while (1);
+0002EE  37FFFF     BRA 0x2EE
+86:                }
+87:                void __attribute__((interrupt,no_auto_psv)) _StackError(void)
+88:                {
+0002F0  FA0000     LNK #0x0
+89:                        INTCON1bits.STKERR = 0;         /* Clear the trap flag */
+0002F2  A94080     BCLR INTCON1, #2
+90:                        while (1);
+0002F4  37FFFF     BRA 0x2F4
+91:                }
+92:                
+93:                void __attribute__((interrupt,no_auto_psv)) _MathError(void)
+94:                {
+0002F6  FA0000     LNK #0x0
+95:                        INTCON1bits.MATHERR = 0;        /* Clear the trap flag */
+0002F8  A98080     BCLR INTCON1, #4
+96:                        while (1);
+0002FA  37FFFF     BRA 0x2FA
+97:                }
+98:                
+99:                #if defined(__HAS_DMA__)
+100:               
+101:               void __attribute__((interrupt,no_auto_psv)) _DMACError(void)
+102:               {
+0002FC  FA0000     LNK #0x0
+103:                       INTCON1bits.DMACERR = 0;        /* Clear the trap flag */
+0002FE  A9A080     BCLR INTCON1, #5
+104:                       while (1);
+000300  37FFFF     BRA 0x300
+105:               }
+106:               
+107:               #endif
+108:               
+109:               #if defined(__dsPIC33F__)
+110:               
+111:               /* Alternate address error trap function declarations */
+112:               void __attribute__((interrupt,no_auto_psv)) _AltOscillatorFail(void)
+113:               {
+000302  FA0000     LNK #0x0
+114:                       INTCON1bits.OSCFAIL = 0;        /* Clear the trap flag */
+000304  A92080     BCLR INTCON1, #1
+115:                       while (1);
+000306  37FFFF     BRA 0x306
+116:               }
+117:               
+118:               void __attribute__((interrupt,no_auto_psv)) _AltAddressError(void)
+119:               {
+000308  FA0000     LNK #0x0
+120:                       INTCON1bits.ADDRERR = 0;        /* Clear the trap flag */
+00030A  A96080     BCLR INTCON1, #3
+121:                       while (1);
+00030C  37FFFF     BRA 0x30C
+122:               }
+123:               
+124:               void __attribute__((interrupt,no_auto_psv)) _AltStackError(void)
+125:               {
+00030E  FA0000     LNK #0x0
+126:                       INTCON1bits.STKERR = 0;         /* Clear the trap flag */
+000310  A94080     BCLR INTCON1, #2
+127:                       while (1);
+000312  37FFFF     BRA 0x312
+128:               }
+129:               
+130:               void __attribute__((interrupt,no_auto_psv)) _AltMathError(void)
+131:               {
+000314  FA0000     LNK #0x0
+132:                       INTCON1bits.MATHERR = 0;        /* Clear the trap flag */
+000316  A98080     BCLR INTCON1, #4
+133:                       while (1);
+000318  37FFFF     BRA 0x318
+134:               }
+135:               
+136:                   #if defined(__HAS_DMA__)
+137:               
+138:                   void __attribute__((interrupt,no_auto_psv)) _AltDMACError(void)
+139:                   {
+00031A  FA0000     LNK #0x0
+140:                        INTCON1bits.DMACERR = 0;        /* Clear the trap flag */
+00031C  A9A080     BCLR INTCON1, #5
+141:                        while (1);
+00031E  37FFFF     BRA 0x31E
+142:                   }
+143:               
+144:                   #endif
+145:               
+146:               #endif
+147:               
+148:               /******************************************************************************/
+149:               /* Default Interrupt Handler                                                  */
+150:               /*                                                                            */
+151:               /* This executes when an interrupt occurs for an interrupt source with an     */
+152:               /* improperly defined or undefined interrupt handling routine.                */
+153:               /******************************************************************************/
+154:               void __attribute__((interrupt,no_auto_psv)) _DefaultInterrupt(void)
+155:               {
+000320  FA0000     LNK #0x0
+156:                       while(1);
+000322  37FFFF     BRA 0x322
+157:               }
+158:               
+159:               #if defined(__dsPIC33E__)
+160:               
+161:               /* These traps are new to the dsPIC33E family.  Refer to the device Interrupt
+162:               chapter of the FRM to understand trap priority. */
+163:               void __attribute__((interrupt,no_auto_psv)) _HardTrapError(void)
+164:               {
+165:                   while(1);
+166:               }
+167:               void __attribute__((interrupt,no_auto_psv)) _SoftTrapError(void)
+168:               {
+169:                   while(1);
+170:               }
+171:               
+172:               #endif
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/system.c  ----------------------------------------
+1:                 /******************************************************************************/
+2:                 /* Files to Include                                                           */
+3:                 /******************************************************************************/
+4:                 
+5:                 /* Device header file */
+6:                 #if defined(__XC16__)
+7:                     #include <xc.h>
+8:                 #elif defined(__C30__)
+9:                     #if defined(__dsPIC33E__)
+10:                    	#include <p33Exxxx.h>
+11:                    #elif defined(__dsPIC33F__)
+12:                    	#include <p33Fxxxx.h>
+13:                    #endif
+14:                #endif
+15:                
+16:                #include <stdint.h>          /* For uint16_t definition                       */
+17:                #include <stdbool.h>         /* For true/false definition                     */
+18:                
+19:                #include "system.h"          /* variables/params used by system.c             */
+20:                
+21:                /******************************************************************************/
+22:                /* System Level Functions                                                     */
+23:                /*                                                                            */
+24:                /* Custom oscillator configuration funtions, reset source evaluation          */
+25:                /* functions, and other non-peripheral microcontroller initialization         */
+26:                /* functions get placed in system.c.                                          */
+27:                /*                                                                            */
+28:                /******************************************************************************/
+29:                
+30:                /* Refer to the device Family Reference Manual Oscillator section for
+31:                information about available oscillator configurations.  Typically
+32:                this would involve configuring the oscillator tuning register or clock
+33:                switching useing the compiler's __builtin_write_OSCCON functions.
+34:                Refer to the C Compiler for PIC24 MCUs and dsPIC DSCs User Guide in the
+35:                compiler installation directory /doc folder for documentation on the
+36:                __builtin functions.*/
+37:                
+38:                /* TODO Add clock switching code if appropriate.  An example stub is below.   */
+39:                void ConfigureOscillator(void)
+40:                {
+001B66  FA0000     LNK #0x0
+41:                    // Configure Oscillator to operate the device at 40Mhz
+42:                    // Fosc = Fin*M/(N1*N2), Fcy = Fosc/2
+43:                    // Fosc = 7.3728M*43/(2*2) = 80Mhz for 7.3728M input clock, Fcy=40Mhz
+44:                	PLLFBD=41;					// M=43
+001B68  200290     MOV #0x29, W0
+001B6A  883A30     MOV W0, PLLFBD
+45:                	CLKDIVbits.PLLPOST=0;		// N1=2
+001B6C  803A20     MOV CLKDIV, W0
+001B6E  A16000     BCLR W0, #6
+001B70  A17000     BCLR W0, #7
+001B72  883A20     MOV W0, CLKDIV
+46:                	CLKDIVbits.PLLPRE=0;		// N2=2
+001B74  803A21     MOV CLKDIV, W1
+001B76  2FFE00     MOV #0xFFE0, W0
+001B78  608000     AND W1, W0, W0
+001B7A  883A20     MOV W0, CLKDIV
+47:                	OSCTUN=0x0015;              // Tune FRC oscillator 8Mhz, if FRC is used
+001B7C  200150     MOV #0x15, W0
+001B7E  883A40     MOV W0, OSCTUN
+48:                    // Disable Watch Dog Timer
+49:                	RCONbits.SWDTEN=0;
+001B80  A9A740     BCLR RCON, #5
+50:                
+51:                    /*MPLAB® C Compiler for PIC24 MCUs and dsPIC DSCs provides the following built-in C language functions for unlocking and writing to the OSCCON register:*/
+52:                    //__builtin_write_OSCCONH(value)
+53:                    //__builtin_write_OSCCONL(value)
+54:                    /*See MPLAB C Compiler Help for more information.*/
+55:                    
+56:                    // Clock switch to incorporate PLL
+57:                	__builtin_write_OSCCONH(0x03);		// Initiate Clock Switch to Primary Oscillator with PLL (NOSC=0b011)
+001B82  200032     MOV #0x3, W2
+001B84  200780     MOV #0x78, W0
+001B86  2009A1     MOV #0x9A, W1
+001B88  207433     MOV #0x743, W3
+001B8A  784980     MOV.B W0, [W3]
+001B8C  784981     MOV.B W1, [W3]
+001B8E  784982     MOV.B W2, [W3]
+58:                	__builtin_write_OSCCONL(0x01);		// Start clock switching
+001B90  200012     MOV #0x1, W2
+001B92  200460     MOV #0x46, W0
+001B94  200571     MOV #0x57, W1
+001B96  207423     MOV #0x742, W3
+001B98  784980     MOV.B W0, [W3]
+001B9A  784981     MOV.B W1, [W3]
+001B9C  784982     MOV.B W2, [W3]
+59:                    //OSCCONbits.NOSC=0b011;
+60:                    //OSCCONbits.OSWEN=1;
+61:                    //OSCCON=0x0301;
+62:                	while(OSCCONbits.COSC != 0b011);    // Wait for Clock switch to occur	
+001B9E  000000     NOP
+001BA0  803A11     MOV OSCCON, W1
+001BA2  270000     MOV #0x7000, W0
+001BA4  608080     AND W1, W0, W1
+001BA6  230000     MOV #0x3000, W0
+001BA8  508F80     SUB W1, W0, [W15]
+001BAA  3AFFFA     BRA NZ, 0x1BA0
+63:                	while(OSCCONbits.LOCK !=1);         // Wait for PLL to lock, only if PLL is needed
+001BAC  000000     NOP
+001BAE  803A11     MOV OSCCON, W1
+001BB0  200200     MOV #0x20, W0
+001BB2  608000     AND W1, W0, W0
+001BB4  E00000     CP0 W0
+001BB6  32FFFB     BRA Z, 0x1BAE
+64:                    
+65:                
+66:                #if 0
+67:                        /* Disable Watch Dog Timer */
+68:                        RCONbits.SWDTEN = 0;
+69:                
+70:                        /* When clock switch occurs switch to Primary Osc (HS, XT, EC) */
+71:                        __builtin_write_OSCCONH(0x02);  /* Set OSCCONH for clock switch */
+72:                        __builtin_write_OSCCONL(0x01);  /* Start clock switching */
+73:                        while(OSCCONbits.COSC != 0b010);
+74:                        /* Wait for Clock switch to occur */
+75:                        /* Wait for PLL to lock, only if PLL is needed */
+76:                        /* while(OSCCONbits.LOCK != 1); */
+77:                #endif
+78:                }
+001BB8  FA8000     ULNK
+001BBA  060000     RETURN
+79:                
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/matrix.c  ----------------------------------------
+1:                 /*
+2:                  * File:   matrix.c
+3:                  * Author: dracula
+4:                  *
+5:                  * Created on December 28, 2016, 10:06 PM
+6:                  */
+7:                 
+8:                 //#include "xc.h"
+9:                 #include "user.h"
+10:                extern int countMatrix;
+11:                extern Matrix *pointerMatrix[];
+12:                //Matrix *m_constructor(Matrix*m, float *triMatrix[3][3], float x11=0, float x12=0, float x13=0, float x21=0, float x22=0, float x23=0, float x31=0, float x32=0, float x33=0)
+13:                Matrix *m_constructor(Matrix*m, float triMatrix[3][3], float x11, float x12, float x13, float x21, float x22, float x23, float x31, float x32, float x33)
+14:                {
+0009CC  FA0014     LNK #0x14
+0009CE  781F88     MOV W8, [W15++]
+0009D0  980720     MOV W0, [W14+4]
+0009D2  980731     MOV W1, [W14+6]
+0009D4  980742     MOV W2, [W14+8]
+0009D6  980753     MOV W3, [W14+10]
+0009D8  980764     MOV W4, [W14+12]
+0009DA  980775     MOV W5, [W14+14]
+0009DC  980F06     MOV W6, [W14+16]
+0009DE  980F17     MOV W7, [W14+18]
+15:                    if(m == NULL)
+0009E0  90002E     MOV [W14+4], W0
+0009E2  E00000     CP0 W0
+0009E4  3A0011     BRA NZ, 0xA08
+16:                    {
+17:                        pointerMatrix[countMatrix] = (Matrix*)malloc(sizeof(Matrix));
+0009E6  804038     MOV countMatrix, W8
+0009E8  200380     MOV #0x38, W0
+0009EA  07FFBC     RCALL 0x964
+0009EC  780080     MOV W0, W1
+0009EE  440108     ADD W8, W8, W2
+0009F0  208260     MOV #0x826, W0
+0009F2  410000     ADD W2, W0, W0
+0009F4  780801     MOV W1, [W0]
+18:                        m = pointerMatrix[countMatrix];
+0009F6  804030     MOV countMatrix, W0
+0009F8  400080     ADD W0, W0, W1
+0009FA  208260     MOV #0x826, W0
+0009FC  408000     ADD W1, W0, W0
+0009FE  780090     MOV [W0], W1
+000A00  980721     MOV W1, [W14+4]
+19:                        countMatrix++;
+000A02  804030     MOV countMatrix, W0
+000A04  E80000     INC W0, W0
+000A06  884030     MOV W0, countMatrix
+20:                    }
+21:                
+22:                    /*
+23:                    Matrix *n;
+24:                    if(m == NULL)
+25:                    {
+26:                        m = n;
+27:                    }
+28:                    */
+29:                    int i,j;
+30:                    if(triMatrix == NULL)
+000A08  90003E     MOV [W14+6], W0
+000A0A  E00000     CP0 W0
+000A0C  3A002D     BRA NZ, 0xA68
+31:                    {
+32:                    m->triMatrix[0][0] = x11;
+000A0E  90002E     MOV [W14+4], W0
+000A10  90014E     MOV [W14+8], W2
+000A12  9001DE     MOV [W14+10], W3
+000A14  BE8802     MOV.D W2, [W0]
+33:                    m->triMatrix[0][1] = x12;
+000A16  90002E     MOV [W14+4], W0
+000A18  90016E     MOV [W14+12], W2
+000A1A  9001FE     MOV [W14+14], W3
+000A1C  980022     MOV W2, [W0+4]
+000A1E  980033     MOV W3, [W0+6]
+34:                    m->triMatrix[0][2] = x13;
+000A20  90002E     MOV [W14+4], W0
+000A22  90090E     MOV [W14+16], W2
+000A24  90099E     MOV [W14+18], W3
+000A26  980042     MOV W2, [W0+8]
+000A28  980053     MOV W3, [W0+10]
+35:                    m->triMatrix[1][0] = x21;
+000A2A  90002E     MOV [W14+4], W0
+000A2C  97B93E     MOV [W14-10], W2
+000A2E  97B9CE     MOV [W14-8], W3
+000A30  980062     MOV W2, [W0+12]
+000A32  980073     MOV W3, [W0+14]
+36:                    m->triMatrix[1][1] = x22;
+000A34  90002E     MOV [W14+4], W0
+000A36  97B91E     MOV [W14-14], W2
+000A38  97B9AE     MOV [W14-12], W3
+000A3A  980802     MOV W2, [W0+16]
+000A3C  980813     MOV W3, [W0+18]
+37:                    m->triMatrix[1][2] = x23;
+000A3E  90002E     MOV [W14+4], W0
+000A40  97B17E     MOV [W14-18], W2
+000A42  97B98E     MOV [W14-16], W3
+000A44  980822     MOV W2, [W0+20]
+000A46  980833     MOV W3, [W0+22]
+38:                    m->triMatrix[2][0] = x31;
+000A48  90002E     MOV [W14+4], W0
+000A4A  97B15E     MOV [W14-22], W2
+000A4C  97B1EE     MOV [W14-20], W3
+000A4E  980842     MOV W2, [W0+24]
+000A50  980853     MOV W3, [W0+26]
+39:                    m->triMatrix[2][1] = x32;
+000A52  90002E     MOV [W14+4], W0
+000A54  97B13E     MOV [W14-26], W2
+000A56  97B1CE     MOV [W14-24], W3
+000A58  980862     MOV W2, [W0+28]
+000A5A  980873     MOV W3, [W0+30]
+40:                    m->triMatrix[2][2] = x33;
+000A5C  90002E     MOV [W14+4], W0
+000A5E  97B11E     MOV [W14-30], W2
+000A60  97B1AE     MOV [W14-28], W3
+000A62  981002     MOV W2, [W0+32]
+000A64  981013     MOV W3, [W0+34]
+000A66  370022     BRA 0xAAC
+41:                    }
+42:                    else
+43:                    {
+44:                    for(i=0;i<3;i++)
+000A68  EB0000     CLR W0
+000A6A  780F00     MOV W0, [W14]
+000A6C  37001C     BRA 0xAA6
+000AA4  E80F1E     INC [W14], [W14]
+000AA6  78001E     MOV [W14], W0
+000AA8  500FE2     SUB W0, #0x2, [W15]
+000AAA  34FFE1     BRA LE, 0xA6E
+45:                    {
+46:                        for(j=0;j<3;j++)
+000A6E  EB0000     CLR W0
+000A70  980710     MOV W0, [W14+2]
+000A72  370015     BRA 0xA9E
+000A98  90001E     MOV [W14+2], W0
+000A9A  E80000     INC W0, W0
+000A9C  980710     MOV W0, [W14+2]
+000A9E  90001E     MOV [W14+2], W0
+000AA0  500FE2     SUB W0, #0x2, [W15]
+000AA2  34FFE8     BRA LE, 0xA74
+47:                        {
+48:                            m->triMatrix[i][j] = triMatrix[i][j];
+000A74  78001E     MOV [W14], W0
+000A76  B9006C     MUL.SU W0, #12, W0
+000A78  780000     MOV W0, W0
+000A7A  9000BE     MOV [W14+6], W1
+000A7C  408080     ADD W1, W0, W1
+000A7E  90001E     MOV [W14+2], W0
+000A80  DD0042     SL W0, #2, W0
+000A82  408000     ADD W1, W0, W0
+000A84  BE0010     MOV.D [W0], W0
+000A86  90022E     MOV [W14+4], W4
+000A88  78011E     MOV [W14], W2
+000A8A  B91163     MUL.SU W2, #3, W2
+000A8C  780182     MOV W2, W3
+000A8E  90011E     MOV [W14+2], W2
+000A90  418102     ADD W3, W2, W2
+000A92  DD1142     SL W2, #2, W2
+000A94  420102     ADD W4, W2, W2
+000A96  BE8900     MOV.D W0, [W2]
+49:                        }
+50:                    };
+51:                    }
+52:                    m->m_plus = m_plus;
+000AAC  90002E     MOV [W14+4], W0
+000AAE  20AF81     MOV #0xAF8, W1
+000AB0  981041     MOV W1, [W0+40]
+53:                    m->m_minus = m_minus;
+000AB2  90002E     MOV [W14+4], W0
+000AB4  20B801     MOV #0xB80, W1
+000AB6  981051     MOV W1, [W0+42]
+54:                    m->m_m_multiply = m_m_multiply;
+000AB8  90002E     MOV [W14+4], W0
+000ABA  20C081     MOV #0xC08, W1
+000ABC  981061     MOV W1, [W0+44]
+55:                    m->m_v_multiply = m_v_multiply;
+000ABE  90002E     MOV [W14+4], W0
+000AC0  20CDE1     MOV #0xCDE, W1
+000AC2  981071     MOV W1, [W0+46]
+56:                    m->m_s_multiply = m_s_multiply;
+000AC4  90002E     MOV [W14+4], W0
+000AC6  20DD41     MOV #0xDD4, W1
+000AC8  981801     MOV W1, [W0+48]
+57:                    m->m_determinant = m_determinant;
+000ACA  90002E     MOV [W14+4], W0
+000ACC  20E541     MOV #0xE54, W1
+000ACE  981811     MOV W1, [W0+50]
+58:                    m->m_cofactor = m_cofactor;
+000AD0  90002E     MOV [W14+4], W0
+000AD2  20F441     MOV #0xF44, W1
+000AD4  981821     MOV W1, [W0+52]
+59:                    m->m_inverse = m_inverse;
+000AD6  90002E     MOV [W14+4], W0
+000AD8  2113A1     MOV #0x113A, W1
+000ADA  981831     MOV W1, [W0+54]
+60:                    return m;
+000ADC  90002E     MOV [W14+4], W0
+61:                };
+000ADE  78044F     MOV [--W15], W8
+000AE0  FA8000     ULNK
+000AE2  060000     RETURN
+62:                
+63:                void m_destructor(Matrix*m, bool dynamic)
+64:                {
+000AE4  FA0004     LNK #0x4
+000AE6  780F00     MOV W0, [W14]
+000AE8  984721     MOV.B W1, [W14+2]
+65:                    if(dynamic)
+000AEA  90402E     MOV.B [W14+2], W0
+000AEC  E00400     CP0.B W0
+000AEE  320002     BRA Z, 0xAF4
+66:                    {
+67:                        free(m);
+000AF0  78001E     MOV [W14], W0
+000AF2  07FED3     RCALL 0x89A
+68:                    }
+69:                };
+000AF4  FA8000     ULNK
+000AF6  060000     RETURN
+70:                
+71:                Matrix *m_plus(Matrix*m,Matrix*n)
+72:                {
+000AF8  FA000A     LNK #0xA
+000AFA  980730     MOV W0, [W14+6]
+000AFC  980741     MOV W1, [W14+8]
+73:                    int i,j;
+74:                    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+000AFE  B80060     MUL.UU W0, #0, W0
+000B00  BE9F80     MOV.D W0, [W15++]
+000B02  B80060     MUL.UU W0, #0, W0
+000B04  BE9F80     MOV.D W0, [W15++]
+000B06  B80060     MUL.UU W0, #0, W0
+000B08  BE9F80     MOV.D W0, [W15++]
+000B0A  B80060     MUL.UU W0, #0, W0
+000B0C  BE9F80     MOV.D W0, [W15++]
+000B0E  B80060     MUL.UU W0, #0, W0
+000B10  BE9F80     MOV.D W0, [W15++]
+000B12  B80060     MUL.UU W0, #0, W0
+000B14  BE9F80     MOV.D W0, [W15++]
+000B16  B83360     MUL.UU W6, #0, W6
+000B18  B82260     MUL.UU W4, #0, W4
+000B1A  B81160     MUL.UU W2, #0, W2
+000B1C  EB0080     CLR W1
+000B1E  EB0000     CLR W0
+000B20  07FF55     RCALL m_constructor
+000B22  5787F8     SUB W15, #0x18, W15
+000B24  980720     MOV W0, [W14+4]
+75:                    for(i=0;i<3;i++)
+000B26  EB0000     CLR W0
+000B28  780F00     MOV W0, [W14]
+000B2A  370024     BRA 0xB74
+000B72  E80F1E     INC [W14], [W14]
+000B74  78001E     MOV [W14], W0
+000B76  500FE2     SUB W0, #0x2, [W15]
+000B78  34FFD9     BRA LE, 0xB2C
+76:                    {
+77:                        for(j=0;j<3;j++)
+000B2C  EB0000     CLR W0
+000B2E  980710     MOV W0, [W14+2]
+000B30  37001D     BRA 0xB6C
+000B66  90001E     MOV [W14+2], W0
+000B68  E80000     INC W0, W0
+000B6A  980710     MOV W0, [W14+2]
+000B6C  90001E     MOV [W14+2], W0
+000B6E  500FE2     SUB W0, #0x2, [W15]
+000B70  34FFE0     BRA LE, 0xB32
+78:                        {
+79:                            temp->triMatrix[i][j] = m->triMatrix[i][i] + n->triMatrix[i][j];
+000B32  9000BE     MOV [W14+6], W1
+000B34  78001E     MOV [W14], W0
+000B36  DD0044     SL W0, #4, W0
+000B38  408000     ADD W1, W0, W0
+000B3A  BE0210     MOV.D [W0], W4
+000B3C  90014E     MOV [W14+8], W2
+000B3E  78001E     MOV [W14], W0
+000B40  B90063     MUL.SU W0, #3, W0
+000B42  780080     MOV W0, W1
+000B44  90001E     MOV [W14+2], W0
+000B46  408000     ADD W1, W0, W0
+000B48  DD0042     SL W0, #2, W0
+000B4A  410000     ADD W2, W0, W0
+000B4C  BE0010     MOV.D [W0], W0
+000B4E  BE0100     MOV.D W0, W2
+000B50  BE0004     MOV.D W4, W0
+000B52  07FC0A     RCALL 0x368
+000B54  90022E     MOV [W14+4], W4
+000B56  78011E     MOV [W14], W2
+000B58  B91163     MUL.SU W2, #3, W2
+000B5A  780182     MOV W2, W3
+000B5C  90011E     MOV [W14+2], W2
+000B5E  418102     ADD W3, W2, W2
+000B60  DD1142     SL W2, #2, W2
+000B62  420102     ADD W4, W2, W2
+000B64  BE8900     MOV.D W0, [W2]
+80:                        }
+81:                    }
+82:                    return temp;
+000B7A  90002E     MOV [W14+4], W0
+83:                };
+000B7C  FA8000     ULNK
+000B7E  060000     RETURN
+84:                
+85:                Matrix *m_minus(Matrix*m,Matrix*n)
+86:                {    
+000B80  FA000A     LNK #0xA
+000B82  980730     MOV W0, [W14+6]
+000B84  980741     MOV W1, [W14+8]
+87:                    int i,j;
+88:                    Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+000B86  B80060     MUL.UU W0, #0, W0
+000B88  BE9F80     MOV.D W0, [W15++]
+000B8A  B80060     MUL.UU W0, #0, W0
+000B8C  BE9F80     MOV.D W0, [W15++]
+000B8E  B80060     MUL.UU W0, #0, W0
+000B90  BE9F80     MOV.D W0, [W15++]
+000B92  B80060     MUL.UU W0, #0, W0
+000B94  BE9F80     MOV.D W0, [W15++]
+000B96  B80060     MUL.UU W0, #0, W0
+000B98  BE9F80     MOV.D W0, [W15++]
+000B9A  B80060     MUL.UU W0, #0, W0
+000B9C  BE9F80     MOV.D W0, [W15++]
+000B9E  B83360     MUL.UU W6, #0, W6
+000BA0  B82260     MUL.UU W4, #0, W4
+000BA2  B81160     MUL.UU W2, #0, W2
+000BA4  EB0080     CLR W1
+000BA6  EB0000     CLR W0
+000BA8  07FF11     RCALL m_constructor
+000BAA  5787F8     SUB W15, #0x18, W15
+000BAC  980720     MOV W0, [W14+4]
+89:                    for(i=0;i<3;i++)
+000BAE  EB0000     CLR W0
+000BB0  780F00     MOV W0, [W14]
+000BB2  370024     BRA 0xBFC
+000BFA  E80F1E     INC [W14], [W14]
+000BFC  78001E     MOV [W14], W0
+000BFE  500FE2     SUB W0, #0x2, [W15]
+000C00  34FFD9     BRA LE, 0xBB4
+90:                    {
+91:                        for(j=0;j<3;j++)
+000BB4  EB0000     CLR W0
+000BB6  980710     MOV W0, [W14+2]
+000BB8  37001D     BRA 0xBF4
+000BEE  90001E     MOV [W14+2], W0
+000BF0  E80000     INC W0, W0
+000BF2  980710     MOV W0, [W14+2]
+000BF4  90001E     MOV [W14+2], W0
+000BF6  500FE2     SUB W0, #0x2, [W15]
+000BF8  34FFE0     BRA LE, 0xBBA
+92:                        {
+93:                            temp->triMatrix[i][j] = m->triMatrix[i][i] - n->triMatrix[i][j];
+000BBA  9000BE     MOV [W14+6], W1
+000BBC  78001E     MOV [W14], W0
+000BBE  DD0044     SL W0, #4, W0
+000BC0  408000     ADD W1, W0, W0
+000BC2  BE0210     MOV.D [W0], W4
+000BC4  90014E     MOV [W14+8], W2
+000BC6  78001E     MOV [W14], W0
+000BC8  B90063     MUL.SU W0, #3, W0
+000BCA  780080     MOV W0, W1
+000BCC  90001E     MOV [W14+2], W0
+000BCE  408000     ADD W1, W0, W0
+000BD0  DD0042     SL W0, #2, W0
+000BD2  410000     ADD W2, W0, W0
+000BD4  BE0010     MOV.D [W0], W0
+000BD6  BE0100     MOV.D W0, W2
+000BD8  BE0004     MOV.D W4, W0
+000BDA  07FBC5     RCALL 0x366
+000BDC  90022E     MOV [W14+4], W4
+000BDE  78011E     MOV [W14], W2
+000BE0  B91163     MUL.SU W2, #3, W2
+000BE2  780182     MOV W2, W3
+000BE4  90011E     MOV [W14+2], W2
+000BE6  418102     ADD W3, W2, W2
+000BE8  DD1142     SL W2, #2, W2
+000BEA  420102     ADD W4, W2, W2
+000BEC  BE8900     MOV.D W0, [W2]
+94:                        }
+95:                    }
+96:                    return temp;
+000C02  90002E     MOV [W14+4], W0
+97:                };
+000C04  FA8000     ULNK
+000C06  060000     RETURN
+98:                
+99:                Matrix *m_m_multiply(Matrix*m,Matrix*n)
+100:               {
+000C08  FA000A     LNK #0xA
+000C0A  BE9F88     MOV.D W8, [W15++]
+000C0C  980730     MOV W0, [W14+6]
+000C0E  980741     MOV W1, [W14+8]
+101:               
+102:                   int i,j;
+103:                   Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+000C10  B80060     MUL.UU W0, #0, W0
+000C12  BE9F80     MOV.D W0, [W15++]
+000C14  B80060     MUL.UU W0, #0, W0
+000C16  BE9F80     MOV.D W0, [W15++]
+000C18  B80060     MUL.UU W0, #0, W0
+000C1A  BE9F80     MOV.D W0, [W15++]
+000C1C  B80060     MUL.UU W0, #0, W0
+000C1E  BE9F80     MOV.D W0, [W15++]
+000C20  B80060     MUL.UU W0, #0, W0
+000C22  BE9F80     MOV.D W0, [W15++]
+000C24  B80060     MUL.UU W0, #0, W0
+000C26  BE9F80     MOV.D W0, [W15++]
+000C28  B83360     MUL.UU W6, #0, W6
+000C2A  B82260     MUL.UU W4, #0, W4
+000C2C  B81160     MUL.UU W2, #0, W2
+000C2E  EB0080     CLR W1
+000C30  EB0000     CLR W0
+000C32  07FECC     RCALL m_constructor
+000C34  5787F8     SUB W15, #0x18, W15
+000C36  980720     MOV W0, [W14+4]
+104:                   for(i=0;i<3;i++)
+000C38  EB0000     CLR W0
+000C3A  780F00     MOV W0, [W14]
+000C3C  370049     BRA 0xCD0
+000CCE  E80F1E     INC [W14], [W14]
+000CD0  78001E     MOV [W14], W0
+000CD2  500FE2     SUB W0, #0x2, [W15]
+000CD4  34FFB4     BRA LE, 0xC3E
+105:                   {
+106:                       for(j=0;j<3;j++)
+000C3E  EB0000     CLR W0
+000C40  980710     MOV W0, [W14+2]
+000C42  370042     BRA 0xCC8
+000CC2  90001E     MOV [W14+2], W0
+000CC4  E80000     INC W0, W0
+000CC6  980710     MOV W0, [W14+2]
+000CC8  90001E     MOV [W14+2], W0
+000CCA  500FE2     SUB W0, #0x2, [W15]
+000CCC  34FFBB     BRA LE, 0xC44
+107:                       {
+108:                           temp->triMatrix[i][j] = m->triMatrix[i][0] * n->triMatrix[0][j] + m->triMatrix[i][1] * n->triMatrix[1][j] +m->triMatrix[i][2] * n->triMatrix[2][j];
+000C44  90013E     MOV [W14+6], W2
+000C46  78001E     MOV [W14], W0
+000C48  B9006C     MUL.SU W0, #12, W0
+000C4A  780000     MOV W0, W0
+000C4C  410000     ADD W2, W0, W0
+000C4E  BE0210     MOV.D [W0], W4
+000C50  9000CE     MOV [W14+8], W1
+000C52  90001E     MOV [W14+2], W0
+000C54  DD0042     SL W0, #2, W0
+000C56  408000     ADD W1, W0, W0
+000C58  BE0010     MOV.D [W0], W0
+000C5A  BE0100     MOV.D W0, W2
+000C5C  BE0004     MOV.D W4, W0
+000C5E  07FC63     RCALL 0x526
+000C60  BE0400     MOV.D W0, W8
+000C62  90013E     MOV [W14+6], W2
+000C64  78001E     MOV [W14], W0
+000C66  B9006C     MUL.SU W0, #12, W0
+000C68  780000     MOV W0, W0
+000C6A  400064     ADD W0, #0x4, W0
+000C6C  410000     ADD W2, W0, W0
+000C6E  BE0210     MOV.D [W0], W4
+000C70  9000CE     MOV [W14+8], W1
+000C72  90001E     MOV [W14+2], W0
+000C74  400063     ADD W0, #0x3, W0
+000C76  DD0042     SL W0, #2, W0
+000C78  408000     ADD W1, W0, W0
+000C7A  BE0010     MOV.D [W0], W0
+000C7C  BE0100     MOV.D W0, W2
+000C7E  BE0004     MOV.D W4, W0
+000C80  07FC52     RCALL 0x526
+000C82  BE0100     MOV.D W0, W2
+000C84  BE0008     MOV.D W8, W0
+000C86  07FB70     RCALL 0x368
+000C88  BE0400     MOV.D W0, W8
+000C8A  90013E     MOV [W14+6], W2
+000C8C  78001E     MOV [W14], W0
+000C8E  B9006C     MUL.SU W0, #12, W0
+000C90  780000     MOV W0, W0
+000C92  400068     ADD W0, #0x8, W0
+000C94  410000     ADD W2, W0, W0
+000C96  BE0210     MOV.D [W0], W4
+000C98  9000CE     MOV [W14+8], W1
+000C9A  90001E     MOV [W14+2], W0
+000C9C  400066     ADD W0, #0x6, W0
+000C9E  DD0042     SL W0, #2, W0
+000CA0  408000     ADD W1, W0, W0
+000CA2  BE0010     MOV.D [W0], W0
+000CA4  BE0100     MOV.D W0, W2
+000CA6  BE0004     MOV.D W4, W0
+000CA8  07FC3E     RCALL 0x526
+000CAA  BE0100     MOV.D W0, W2
+000CAC  BE0008     MOV.D W8, W0
+000CAE  07FB5C     RCALL 0x368
+000CB0  90022E     MOV [W14+4], W4
+000CB2  78011E     MOV [W14], W2
+000CB4  B91163     MUL.SU W2, #3, W2
+000CB6  780182     MOV W2, W3
+000CB8  90011E     MOV [W14+2], W2
+000CBA  418102     ADD W3, W2, W2
+000CBC  DD1142     SL W2, #2, W2
+000CBE  420102     ADD W4, W2, W2
+000CC0  BE8900     MOV.D W0, [W2]
+109:                       }
+110:                   }
+111:                   return temp;
+000CD6  90002E     MOV [W14+4], W0
+112:               };
+000CD8  BE044F     MOV.D [--W15], W8
+000CDA  FA8000     ULNK
+000CDC  060000     RETURN
+113:               
+114:               Vector3f *m_v_multiply(Matrix*m,Vector3f *v)
+115:               {
+000CDE  FA0006     LNK #0x6
+000CE0  BE9F88     MOV.D W8, [W15++]
+000CE2  980710     MOV W0, [W14+2]
+000CE4  980721     MOV W1, [W14+4]
+116:                   Vector3f *temp = v_constructor(NULL, 0, 0, 0);
+000CE6  B83360     MUL.UU W6, #0, W6
+000CE8  B82260     MUL.UU W4, #0, W4
+000CEA  B81160     MUL.UU W2, #0, W2
+000CEC  EB0000     CLR W0
+000CEE  07058E     RCALL v_constructor
+000CF0  780F00     MOV W0, [W14]
+117:                   temp->x = m->triMatrix[0][0] * v->x + m->triMatrix[0][1] * v->y + m->triMatrix[0][2] * v->z;
+000CF2  90001E     MOV [W14+2], W0
+000CF4  BE0210     MOV.D [W0], W4
+000CF6  90002E     MOV [W14+4], W0
+000CF8  BE0010     MOV.D [W0], W0
+000CFA  BE0100     MOV.D W0, W2
+000CFC  BE0004     MOV.D W4, W0
+000CFE  07FC13     RCALL 0x526
+000D00  BE0400     MOV.D W0, W8
+000D02  90001E     MOV [W14+2], W0
+000D04  900220     MOV [W0+4], W4
+000D06  9002B0     MOV [W0+6], W5
+000D08  90002E     MOV [W14+4], W0
+000D0A  9000B0     MOV [W0+6], W1
+000D0C  900020     MOV [W0+4], W0
+000D0E  BE0100     MOV.D W0, W2
+000D10  BE0004     MOV.D W4, W0
+000D12  07FC09     RCALL 0x526
+000D14  BE0100     MOV.D W0, W2
+000D16  BE0008     MOV.D W8, W0
+000D18  07FB27     RCALL 0x368
+000D1A  BE0400     MOV.D W0, W8
+000D1C  90001E     MOV [W14+2], W0
+000D1E  900240     MOV [W0+8], W4
+000D20  9002D0     MOV [W0+10], W5
+000D22  90002E     MOV [W14+4], W0
+000D24  9000D0     MOV [W0+10], W1
+000D26  900040     MOV [W0+8], W0
+000D28  BE0100     MOV.D W0, W2
+000D2A  BE0004     MOV.D W4, W0
+000D2C  07FBFC     RCALL 0x526
+000D2E  BE0100     MOV.D W0, W2
+000D30  BE0008     MOV.D W8, W0
+000D32  07FB1A     RCALL 0x368
+000D34  78011E     MOV [W14], W2
+000D36  BE8900     MOV.D W0, [W2]
+118:                   temp->y = m->triMatrix[1][0] * v->x + m->triMatrix[1][1] * v->y + m->triMatrix[1][2] * v->z;
+000D38  90001E     MOV [W14+2], W0
+000D3A  900260     MOV [W0+12], W4
+000D3C  9002F0     MOV [W0+14], W5
+000D3E  90002E     MOV [W14+4], W0
+000D40  BE0010     MOV.D [W0], W0
+000D42  BE0100     MOV.D W0, W2
+000D44  BE0004     MOV.D W4, W0
+000D46  07FBEF     RCALL 0x526
+000D48  BE0400     MOV.D W0, W8
+000D4A  90001E     MOV [W14+2], W0
+000D4C  900A00     MOV [W0+16], W4
+000D4E  900A90     MOV [W0+18], W5
+000D50  90002E     MOV [W14+4], W0
+000D52  9000B0     MOV [W0+6], W1
+000D54  900020     MOV [W0+4], W0
+000D56  BE0100     MOV.D W0, W2
+000D58  BE0004     MOV.D W4, W0
+000D5A  07FBE5     RCALL 0x526
+000D5C  BE0100     MOV.D W0, W2
+000D5E  BE0008     MOV.D W8, W0
+000D60  07FB03     RCALL 0x368
+000D62  BE0400     MOV.D W0, W8
+000D64  90001E     MOV [W14+2], W0
+000D66  900A20     MOV [W0+20], W4
+000D68  900AB0     MOV [W0+22], W5
+000D6A  90002E     MOV [W14+4], W0
+000D6C  9000D0     MOV [W0+10], W1
+000D6E  900040     MOV [W0+8], W0
+000D70  BE0100     MOV.D W0, W2
+000D72  BE0004     MOV.D W4, W0
+000D74  07FBD8     RCALL 0x526
+000D76  BE0100     MOV.D W0, W2
+000D78  BE0008     MOV.D W8, W0
+000D7A  07FAF6     RCALL 0x368
+000D7C  78011E     MOV [W14], W2
+000D7E  980120     MOV W0, [W2+4]
+000D80  980131     MOV W1, [W2+6]
+119:                   temp->z = m->triMatrix[2][0] * v->x + m->triMatrix[2][1] * v->y + m->triMatrix[2][2] * v->z;
+000D82  90001E     MOV [W14+2], W0
+000D84  900A40     MOV [W0+24], W4
+000D86  900AD0     MOV [W0+26], W5
+000D88  90002E     MOV [W14+4], W0
+000D8A  BE0010     MOV.D [W0], W0
+000D8C  BE0100     MOV.D W0, W2
+000D8E  BE0004     MOV.D W4, W0
+000D90  07FBCA     RCALL 0x526
+000D92  BE0400     MOV.D W0, W8
+000D94  90001E     MOV [W14+2], W0
+000D96  900A60     MOV [W0+28], W4
+000D98  900AF0     MOV [W0+30], W5
+000D9A  90002E     MOV [W14+4], W0
+000D9C  9000B0     MOV [W0+6], W1
+000D9E  900020     MOV [W0+4], W0
+000DA0  BE0100     MOV.D W0, W2
+000DA2  BE0004     MOV.D W4, W0
+000DA4  07FBC0     RCALL 0x526
+000DA6  BE0100     MOV.D W0, W2
+000DA8  BE0008     MOV.D W8, W0
+000DAA  07FADE     RCALL 0x368
+000DAC  BE0400     MOV.D W0, W8
+000DAE  90001E     MOV [W14+2], W0
+000DB0  901200     MOV [W0+32], W4
+000DB2  901290     MOV [W0+34], W5
+000DB4  90002E     MOV [W14+4], W0
+000DB6  9000D0     MOV [W0+10], W1
+000DB8  900040     MOV [W0+8], W0
+000DBA  BE0100     MOV.D W0, W2
+000DBC  BE0004     MOV.D W4, W0
+000DBE  07FBB3     RCALL 0x526
+000DC0  BE0100     MOV.D W0, W2
+000DC2  BE0008     MOV.D W8, W0
+000DC4  07FAD1     RCALL 0x368
+000DC6  78011E     MOV [W14], W2
+000DC8  980140     MOV W0, [W2+8]
+000DCA  980151     MOV W1, [W2+10]
+120:                   return temp;
+000DCC  78001E     MOV [W14], W0
+121:               };
+000DCE  BE044F     MOV.D [--W15], W8
+000DD0  FA8000     ULNK
+000DD2  060000     RETURN
+122:               
+123:               Matrix *m_s_multiply(Matrix*m,float s)
+124:               {
+000DD4  FA000C     LNK #0xC
+000DD6  980730     MOV W0, [W14+6]
+000DD8  980742     MOV W2, [W14+8]
+000DDA  980753     MOV W3, [W14+10]
+125:                   int i,j;
+126:                   Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+000DDC  B80060     MUL.UU W0, #0, W0
+000DDE  BE9F80     MOV.D W0, [W15++]
+000DE0  B80060     MUL.UU W0, #0, W0
+000DE2  BE9F80     MOV.D W0, [W15++]
+000DE4  B80060     MUL.UU W0, #0, W0
+000DE6  BE9F80     MOV.D W0, [W15++]
+000DE8  B80060     MUL.UU W0, #0, W0
+000DEA  BE9F80     MOV.D W0, [W15++]
+000DEC  B80060     MUL.UU W0, #0, W0
+000DEE  BE9F80     MOV.D W0, [W15++]
+000DF0  B80060     MUL.UU W0, #0, W0
+000DF2  BE9F80     MOV.D W0, [W15++]
+000DF4  B83360     MUL.UU W6, #0, W6
+000DF6  B82260     MUL.UU W4, #0, W4
+000DF8  B81160     MUL.UU W2, #0, W2
+000DFA  EB0080     CLR W1
+000DFC  EB0000     CLR W0
+000DFE  07FDE6     RCALL m_constructor
+000E00  5787F8     SUB W15, #0x18, W15
+000E02  980720     MOV W0, [W14+4]
+127:                   for(i=0;i<3;i++)
+000E04  EB0000     CLR W0
+000E06  780F00     MOV W0, [W14]
+000E08  37001F     BRA 0xE48
+000E46  E80F1E     INC [W14], [W14]
+000E48  78001E     MOV [W14], W0
+000E4A  500FE2     SUB W0, #0x2, [W15]
+000E4C  34FFDE     BRA LE, 0xE0A
+128:                   {
+129:                       for(j=0;j<3;j++)
+000E0A  EB0000     CLR W0
+000E0C  980710     MOV W0, [W14+2]
+000E0E  370018     BRA 0xE40
+000E3A  90001E     MOV [W14+2], W0
+000E3C  E80000     INC W0, W0
+000E3E  980710     MOV W0, [W14+2]
+000E40  90001E     MOV [W14+2], W0
+000E42  500FE2     SUB W0, #0x2, [W15]
+000E44  34FFE5     BRA LE, 0xE10
+130:                       {
+131:                           temp->triMatrix[i][j] = m->triMatrix[i][j] * s;
+000E10  90013E     MOV [W14+6], W2
+000E12  78001E     MOV [W14], W0
+000E14  B90063     MUL.SU W0, #3, W0
+000E16  780080     MOV W0, W1
+000E18  90001E     MOV [W14+2], W0
+000E1A  408000     ADD W1, W0, W0
+000E1C  DD0042     SL W0, #2, W0
+000E1E  410000     ADD W2, W0, W0
+000E20  BE0010     MOV.D [W0], W0
+000E22  90014E     MOV [W14+8], W2
+000E24  9001DE     MOV [W14+10], W3
+000E26  07FB7F     RCALL 0x526
+000E28  90022E     MOV [W14+4], W4
+000E2A  78011E     MOV [W14], W2
+000E2C  B91163     MUL.SU W2, #3, W2
+000E2E  780182     MOV W2, W3
+000E30  90011E     MOV [W14+2], W2
+000E32  418102     ADD W3, W2, W2
+000E34  DD1142     SL W2, #2, W2
+000E36  420102     ADD W4, W2, W2
+000E38  BE8900     MOV.D W0, [W2]
+132:                       }
+133:                   }    
+134:                   return temp;   
+000E4E  90002E     MOV [W14+4], W0
+135:               };
+000E50  FA8000     ULNK
+000E52  060000     RETURN
+136:               
+137:               float m_determinant(Matrix *m)
+138:               {
+000E54  FA0002     LNK #0x2
+000E56  BE9F88     MOV.D W8, [W15++]
+000E58  780F00     MOV W0, [W14]
+139:                   return m->triMatrix[0][0] * m->triMatrix[1][1] * m->triMatrix[2][2] + m->triMatrix[1][0] * m->triMatrix[2][1] * m->triMatrix[0][2] + m->triMatrix[2][0] * m->triMatrix[0][1] * m->triMatrix[1][2] -
+000E5A  78001E     MOV [W14], W0
+000E5C  BE0210     MOV.D [W0], W4
+000E5E  78001E     MOV [W14], W0
+000E60  900890     MOV [W0+18], W1
+000E62  900800     MOV [W0+16], W0
+000E64  BE0100     MOV.D W0, W2
+000E66  BE0004     MOV.D W4, W0
+000E68  07FB5E     RCALL 0x526
+000E6A  BE0200     MOV.D W0, W4
+000E6C  78001E     MOV [W14], W0
+000E6E  901090     MOV [W0+34], W1
+000E70  901000     MOV [W0+32], W0
+000E72  BE0100     MOV.D W0, W2
+000E74  BE0004     MOV.D W4, W0
+000E76  07FB57     RCALL 0x526
+000E78  BE0400     MOV.D W0, W8
+000E7A  78001E     MOV [W14], W0
+000E7C  900260     MOV [W0+12], W4
+000E7E  9002F0     MOV [W0+14], W5
+000E80  78001E     MOV [W14], W0
+000E82  9008F0     MOV [W0+30], W1
+000E84  900860     MOV [W0+28], W0
+000E86  BE0100     MOV.D W0, W2
+000E88  BE0004     MOV.D W4, W0
+000E8A  07FB4D     RCALL 0x526
+000E8C  BE0200     MOV.D W0, W4
+000E8E  78001E     MOV [W14], W0
+000E90  9000D0     MOV [W0+10], W1
+000E92  900040     MOV [W0+8], W0
+000E94  BE0100     MOV.D W0, W2
+000E96  BE0004     MOV.D W4, W0
+000E98  07FB46     RCALL 0x526
+000E9A  BE0100     MOV.D W0, W2
+000E9C  BE0008     MOV.D W8, W0
+000E9E  07FA64     RCALL 0x368
+000EA0  BE0400     MOV.D W0, W8
+000EA2  78001E     MOV [W14], W0
+000EA4  900A40     MOV [W0+24], W4
+000EA6  900AD0     MOV [W0+26], W5
+000EA8  78001E     MOV [W14], W0
+000EAA  9000B0     MOV [W0+6], W1
+000EAC  900020     MOV [W0+4], W0
+000EAE  BE0100     MOV.D W0, W2
+000EB0  BE0004     MOV.D W4, W0
+000EB2  07FB39     RCALL 0x526
+000EB4  BE0200     MOV.D W0, W4
+000EB6  78001E     MOV [W14], W0
+000EB8  9008B0     MOV [W0+22], W1
+000EBA  900820     MOV [W0+20], W0
+000EBC  BE0100     MOV.D W0, W2
+000EBE  BE0004     MOV.D W4, W0
+000EC0  07FB32     RCALL 0x526
+000EC2  BE0100     MOV.D W0, W2
+000EC4  BE0008     MOV.D W8, W0
+000EC6  07FA50     RCALL 0x368
+000EC8  BE0400     MOV.D W0, W8
+000EEA  BE0100     MOV.D W0, W2
+000EEC  BE0008     MOV.D W8, W0
+000EEE  07FA3B     RCALL 0x366
+000EF0  BE0400     MOV.D W0, W8
+000F38  BE0100     MOV.D W0, W2
+000F3A  BE0008     MOV.D W8, W0
+000F3C  07FA14     RCALL 0x366
+140:               		m->triMatrix[2][0] * m->triMatrix[1][1] * m->triMatrix[0][2] - m->triMatrix[1][0] * m->triMatrix[0][1] * m->triMatrix[2][2] - m->triMatrix[0][0] * m->triMatrix[2][1] * m->triMatrix[1][2];
+000ECA  78001E     MOV [W14], W0
+000ECC  900A40     MOV [W0+24], W4
+000ECE  900AD0     MOV [W0+26], W5
+000ED0  78001E     MOV [W14], W0
+000ED2  900890     MOV [W0+18], W1
+000ED4  900800     MOV [W0+16], W0
+000ED6  BE0100     MOV.D W0, W2
+000ED8  BE0004     MOV.D W4, W0
+000EDA  07FB25     RCALL 0x526
+000EDC  BE0200     MOV.D W0, W4
+000EDE  78001E     MOV [W14], W0
+000EE0  9000D0     MOV [W0+10], W1
+000EE2  900040     MOV [W0+8], W0
+000EE4  BE0100     MOV.D W0, W2
+000EE6  BE0004     MOV.D W4, W0
+000EE8  07FB1E     RCALL 0x526
+000EF2  78001E     MOV [W14], W0
+000EF4  900260     MOV [W0+12], W4
+000EF6  9002F0     MOV [W0+14], W5
+000EF8  78001E     MOV [W14], W0
+000EFA  9000B0     MOV [W0+6], W1
+000EFC  900020     MOV [W0+4], W0
+000EFE  BE0100     MOV.D W0, W2
+000F00  BE0004     MOV.D W4, W0
+000F02  07FB11     RCALL 0x526
+000F04  BE0200     MOV.D W0, W4
+000F06  78001E     MOV [W14], W0
+000F08  901090     MOV [W0+34], W1
+000F0A  901000     MOV [W0+32], W0
+000F0C  BE0100     MOV.D W0, W2
+000F0E  BE0004     MOV.D W4, W0
+000F10  07FB0A     RCALL 0x526
+000F12  BE0100     MOV.D W0, W2
+000F14  BE0008     MOV.D W8, W0
+000F16  07FA27     RCALL 0x366
+000F18  BE0400     MOV.D W0, W8
+000F1A  78001E     MOV [W14], W0
+000F1C  BE0210     MOV.D [W0], W4
+000F1E  78001E     MOV [W14], W0
+000F20  9008F0     MOV [W0+30], W1
+000F22  900860     MOV [W0+28], W0
+000F24  BE0100     MOV.D W0, W2
+000F26  BE0004     MOV.D W4, W0
+000F28  07FAFE     RCALL 0x526
+000F2A  BE0200     MOV.D W0, W4
+000F2C  78001E     MOV [W14], W0
+000F2E  9008B0     MOV [W0+22], W1
+000F30  900820     MOV [W0+20], W0
+000F32  BE0100     MOV.D W0, W2
+000F34  BE0004     MOV.D W4, W0
+000F36  07FAF7     RCALL 0x526
+141:               };
+000F3E  BE044F     MOV.D [--W15], W8
+000F40  FA8000     ULNK
+000F42  060000     RETURN
+142:               
+143:               Matrix *m_cofactor(Matrix *m)
+144:               {
+000F44  FA0004     LNK #0x4
+000F46  BE9F88     MOV.D W8, [W15++]
+000F48  980710     MOV W0, [W14+2]
+145:                   Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+000F4A  B80060     MUL.UU W0, #0, W0
+000F4C  BE9F80     MOV.D W0, [W15++]
+000F4E  B80060     MUL.UU W0, #0, W0
+000F50  BE9F80     MOV.D W0, [W15++]
+000F52  B80060     MUL.UU W0, #0, W0
+000F54  BE9F80     MOV.D W0, [W15++]
+000F56  B80060     MUL.UU W0, #0, W0
+000F58  BE9F80     MOV.D W0, [W15++]
+000F5A  B80060     MUL.UU W0, #0, W0
+000F5C  BE9F80     MOV.D W0, [W15++]
+000F5E  B80060     MUL.UU W0, #0, W0
+000F60  BE9F80     MOV.D W0, [W15++]
+000F62  B83360     MUL.UU W6, #0, W6
+000F64  B82260     MUL.UU W4, #0, W4
+000F66  B81160     MUL.UU W2, #0, W2
+000F68  EB0080     CLR W1
+000F6A  EB0000     CLR W0
+000F6C  07FD2F     RCALL m_constructor
+000F6E  5787F8     SUB W15, #0x18, W15
+000F70  780F00     MOV W0, [W14]
+146:                   temp->triMatrix[0][0] = m->triMatrix[1][1] * m->triMatrix[2][2]- m->triMatrix[1][2] * m->triMatrix[2][1];
+000F72  90001E     MOV [W14+2], W0
+000F74  900A00     MOV [W0+16], W4
+000F76  900A90     MOV [W0+18], W5
+000F78  90001E     MOV [W14+2], W0
+000F7A  901090     MOV [W0+34], W1
+000F7C  901000     MOV [W0+32], W0
+000F7E  BE0100     MOV.D W0, W2
+000F80  BE0004     MOV.D W4, W0
+000F82  07FAD1     RCALL 0x526
+000F84  BE0400     MOV.D W0, W8
+000F86  90001E     MOV [W14+2], W0
+000F88  900A20     MOV [W0+20], W4
+000F8A  900AB0     MOV [W0+22], W5
+000F8C  90001E     MOV [W14+2], W0
+000F8E  9008F0     MOV [W0+30], W1
+000F90  900860     MOV [W0+28], W0
+000F92  BE0100     MOV.D W0, W2
+000F94  BE0004     MOV.D W4, W0
+000F96  07FAC7     RCALL 0x526
+000F98  BE0100     MOV.D W0, W2
+000F9A  BE0008     MOV.D W8, W0
+000F9C  07F9E4     RCALL 0x366
+000F9E  78011E     MOV [W14], W2
+000FA0  BE8900     MOV.D W0, [W2]
+147:               	temp->triMatrix[0][1] = -(m->triMatrix[0][1] * m->triMatrix[2][2] - m->triMatrix[2][1] * m->triMatrix[0][2]);
+000FA2  90001E     MOV [W14+2], W0
+000FA4  900220     MOV [W0+4], W4
+000FA6  9002B0     MOV [W0+6], W5
+000FA8  90001E     MOV [W14+2], W0
+000FAA  901090     MOV [W0+34], W1
+000FAC  901000     MOV [W0+32], W0
+000FAE  BE0100     MOV.D W0, W2
+000FB0  BE0004     MOV.D W4, W0
+000FB2  07FAB9     RCALL 0x526
+000FB4  BE0400     MOV.D W0, W8
+000FB6  90001E     MOV [W14+2], W0
+000FB8  900A60     MOV [W0+28], W4
+000FBA  900AF0     MOV [W0+30], W5
+000FBC  90001E     MOV [W14+2], W0
+000FBE  9000D0     MOV [W0+10], W1
+000FC0  900040     MOV [W0+8], W0
+000FC2  BE0100     MOV.D W0, W2
+000FC4  BE0004     MOV.D W4, W0
+000FC6  07FAAF     RCALL 0x526
+000FC8  BE0100     MOV.D W0, W2
+000FCA  BE0008     MOV.D W8, W0
+000FCC  07F9CC     RCALL 0x366
+000FCE  A2F001     BTG W1, #15
+000FD0  78011E     MOV [W14], W2
+000FD2  980120     MOV W0, [W2+4]
+000FD4  980131     MOV W1, [W2+6]
+148:               	temp->triMatrix[0][2] = m->triMatrix[0][1] * m->triMatrix[1][2] - m->triMatrix[1][1] * m->triMatrix[0][2];
+000FD6  90001E     MOV [W14+2], W0
+000FD8  900220     MOV [W0+4], W4
+000FDA  9002B0     MOV [W0+6], W5
+000FDC  90001E     MOV [W14+2], W0
+000FDE  9008B0     MOV [W0+22], W1
+000FE0  900820     MOV [W0+20], W0
+000FE2  BE0100     MOV.D W0, W2
+000FE4  BE0004     MOV.D W4, W0
+000FE6  07FA9F     RCALL 0x526
+000FE8  BE0400     MOV.D W0, W8
+000FEA  90001E     MOV [W14+2], W0
+000FEC  900A00     MOV [W0+16], W4
+000FEE  900A90     MOV [W0+18], W5
+000FF0  90001E     MOV [W14+2], W0
+000FF2  9000D0     MOV [W0+10], W1
+000FF4  900040     MOV [W0+8], W0
+000FF6  BE0100     MOV.D W0, W2
+000FF8  BE0004     MOV.D W4, W0
+000FFA  07FA95     RCALL 0x526
+000FFC  BE0100     MOV.D W0, W2
+000FFE  BE0008     MOV.D W8, W0
+001000  07F9B2     RCALL 0x366
+001002  78011E     MOV [W14], W2
+001004  980140     MOV W0, [W2+8]
+001006  980151     MOV W1, [W2+10]
+149:               	temp->triMatrix[1][0] = -(m->triMatrix[1][0] * m->triMatrix[2][2] - m->triMatrix[2][0] * m->triMatrix[1][2]);
+001008  90001E     MOV [W14+2], W0
+00100A  900260     MOV [W0+12], W4
+00100C  9002F0     MOV [W0+14], W5
+00100E  90001E     MOV [W14+2], W0
+001010  901090     MOV [W0+34], W1
+001012  901000     MOV [W0+32], W0
+001014  BE0100     MOV.D W0, W2
+001016  BE0004     MOV.D W4, W0
+001018  07FA86     RCALL 0x526
+00101A  BE0400     MOV.D W0, W8
+00101C  90001E     MOV [W14+2], W0
+00101E  900A40     MOV [W0+24], W4
+001020  900AD0     MOV [W0+26], W5
+001022  90001E     MOV [W14+2], W0
+001024  9008B0     MOV [W0+22], W1
+001026  900820     MOV [W0+20], W0
+001028  BE0100     MOV.D W0, W2
+00102A  BE0004     MOV.D W4, W0
+00102C  07FA7C     RCALL 0x526
+00102E  BE0100     MOV.D W0, W2
+001030  BE0008     MOV.D W8, W0
+001032  07F999     RCALL 0x366
+001034  A2F001     BTG W1, #15
+001036  78011E     MOV [W14], W2
+001038  980160     MOV W0, [W2+12]
+00103A  980171     MOV W1, [W2+14]
+150:               	temp->triMatrix[1][1] = m->triMatrix[0][0] * m->triMatrix[2][2] - m->triMatrix[2][0] * m->triMatrix[0][2];
+00103C  90001E     MOV [W14+2], W0
+00103E  BE0210     MOV.D [W0], W4
+001040  90001E     MOV [W14+2], W0
+001042  901090     MOV [W0+34], W1
+001044  901000     MOV [W0+32], W0
+001046  BE0100     MOV.D W0, W2
+001048  BE0004     MOV.D W4, W0
+00104A  07FA6D     RCALL 0x526
+00104C  BE0400     MOV.D W0, W8
+00104E  90001E     MOV [W14+2], W0
+001050  900A40     MOV [W0+24], W4
+001052  900AD0     MOV [W0+26], W5
+001054  90001E     MOV [W14+2], W0
+001056  9000D0     MOV [W0+10], W1
+001058  900040     MOV [W0+8], W0
+00105A  BE0100     MOV.D W0, W2
+00105C  BE0004     MOV.D W4, W0
+00105E  07FA63     RCALL 0x526
+001060  BE0100     MOV.D W0, W2
+001062  BE0008     MOV.D W8, W0
+001064  07F980     RCALL 0x366
+001066  78011E     MOV [W14], W2
+001068  980900     MOV W0, [W2+16]
+00106A  980911     MOV W1, [W2+18]
+151:               	temp->triMatrix[1][2] = -(m->triMatrix[0][0] * m->triMatrix[1][2] - m->triMatrix[1][0] * m->triMatrix[0][2]);
+00106C  90001E     MOV [W14+2], W0
+00106E  BE0210     MOV.D [W0], W4
+001070  90001E     MOV [W14+2], W0
+001072  9008B0     MOV [W0+22], W1
+001074  900820     MOV [W0+20], W0
+001076  BE0100     MOV.D W0, W2
+001078  BE0004     MOV.D W4, W0
+00107A  07FA55     RCALL 0x526
+00107C  BE0400     MOV.D W0, W8
+00107E  90001E     MOV [W14+2], W0
+001080  900260     MOV [W0+12], W4
+001082  9002F0     MOV [W0+14], W5
+001084  90001E     MOV [W14+2], W0
+001086  9000D0     MOV [W0+10], W1
+001088  900040     MOV [W0+8], W0
+00108A  BE0100     MOV.D W0, W2
+00108C  BE0004     MOV.D W4, W0
+00108E  07FA4B     RCALL 0x526
+001090  BE0100     MOV.D W0, W2
+001092  BE0008     MOV.D W8, W0
+001094  07F968     RCALL 0x366
+001096  A2F001     BTG W1, #15
+001098  78011E     MOV [W14], W2
+00109A  980920     MOV W0, [W2+20]
+00109C  980931     MOV W1, [W2+22]
+152:               	temp->triMatrix[2][0] = m->triMatrix[1][0] * m->triMatrix[2][1] - m->triMatrix[2][0] * m->triMatrix[1][1]; 
+00109E  90001E     MOV [W14+2], W0
+0010A0  900260     MOV [W0+12], W4
+0010A2  9002F0     MOV [W0+14], W5
+0010A4  90001E     MOV [W14+2], W0
+0010A6  9008F0     MOV [W0+30], W1
+0010A8  900860     MOV [W0+28], W0
+0010AA  BE0100     MOV.D W0, W2
+0010AC  BE0004     MOV.D W4, W0
+0010AE  07FA3B     RCALL 0x526
+0010B0  BE0400     MOV.D W0, W8
+0010B2  90001E     MOV [W14+2], W0
+0010B4  900A40     MOV [W0+24], W4
+0010B6  900AD0     MOV [W0+26], W5
+0010B8  90001E     MOV [W14+2], W0
+0010BA  900890     MOV [W0+18], W1
+0010BC  900800     MOV [W0+16], W0
+0010BE  BE0100     MOV.D W0, W2
+0010C0  BE0004     MOV.D W4, W0
+0010C2  07FA31     RCALL 0x526
+0010C4  BE0100     MOV.D W0, W2
+0010C6  BE0008     MOV.D W8, W0
+0010C8  07F94E     RCALL 0x366
+0010CA  78011E     MOV [W14], W2
+0010CC  980940     MOV W0, [W2+24]
+0010CE  980951     MOV W1, [W2+26]
+153:               	temp->triMatrix[2][1] = -(m->triMatrix[0][0] * m->triMatrix[2][1] - m->triMatrix[2][0] * m->triMatrix[0][1]);
+0010D0  90001E     MOV [W14+2], W0
+0010D2  BE0210     MOV.D [W0], W4
+0010D4  90001E     MOV [W14+2], W0
+0010D6  9008F0     MOV [W0+30], W1
+0010D8  900860     MOV [W0+28], W0
+0010DA  BE0100     MOV.D W0, W2
+0010DC  BE0004     MOV.D W4, W0
+0010DE  07FA23     RCALL 0x526
+0010E0  BE0400     MOV.D W0, W8
+0010E2  90001E     MOV [W14+2], W0
+0010E4  900A40     MOV [W0+24], W4
+0010E6  900AD0     MOV [W0+26], W5
+0010E8  90001E     MOV [W14+2], W0
+0010EA  9000B0     MOV [W0+6], W1
+0010EC  900020     MOV [W0+4], W0
+0010EE  BE0100     MOV.D W0, W2
+0010F0  BE0004     MOV.D W4, W0
+0010F2  07FA19     RCALL 0x526
+0010F4  BE0100     MOV.D W0, W2
+0010F6  BE0008     MOV.D W8, W0
+0010F8  07F936     RCALL 0x366
+0010FA  A2F001     BTG W1, #15
+0010FC  78011E     MOV [W14], W2
+0010FE  980960     MOV W0, [W2+28]
+001100  980971     MOV W1, [W2+30]
+154:               	temp->triMatrix[2][2] = m->triMatrix[0][0] * m->triMatrix[1][1] - m->triMatrix[1][0] * m->triMatrix[0][1];
+001102  90001E     MOV [W14+2], W0
+001104  BE0210     MOV.D [W0], W4
+001106  90001E     MOV [W14+2], W0
+001108  900890     MOV [W0+18], W1
+00110A  900800     MOV [W0+16], W0
+00110C  BE0100     MOV.D W0, W2
+00110E  BE0004     MOV.D W4, W0
+001110  07FA0A     RCALL 0x526
+001112  BE0400     MOV.D W0, W8
+001114  90001E     MOV [W14+2], W0
+001116  900260     MOV [W0+12], W4
+001118  9002F0     MOV [W0+14], W5
+00111A  90001E     MOV [W14+2], W0
+00111C  9000B0     MOV [W0+6], W1
+00111E  900020     MOV [W0+4], W0
+001120  BE0100     MOV.D W0, W2
+001122  BE0004     MOV.D W4, W0
+001124  07FA00     RCALL 0x526
+001126  BE0100     MOV.D W0, W2
+001128  BE0008     MOV.D W8, W0
+00112A  07F91D     RCALL 0x366
+00112C  78011E     MOV [W14], W2
+00112E  981100     MOV W0, [W2+32]
+001130  981111     MOV W1, [W2+34]
+155:               
+156:               	return temp;
+001132  78001E     MOV [W14], W0
+157:               };
+001134  BE044F     MOV.D [--W15], W8
+001136  FA8000     ULNK
+001138  060000     RETURN
+158:               
+159:               Matrix *m_inverse(Matrix *m)
+160:               {
+00113A  FA0008     LNK #0x8
+00113C  BE9F88     MOV.D W8, [W15++]
+00113E  781F8A     MOV W10, [W15++]
+001140  980730     MOV W0, [W14+6]
+161:                   Matrix *temp = m_constructor(NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+001142  B80060     MUL.UU W0, #0, W0
+001144  BE9F80     MOV.D W0, [W15++]
+001146  B80060     MUL.UU W0, #0, W0
+001148  BE9F80     MOV.D W0, [W15++]
+00114A  B80060     MUL.UU W0, #0, W0
+00114C  BE9F80     MOV.D W0, [W15++]
+00114E  B80060     MUL.UU W0, #0, W0
+001150  BE9F80     MOV.D W0, [W15++]
+001152  B80060     MUL.UU W0, #0, W0
+001154  BE9F80     MOV.D W0, [W15++]
+001156  B80060     MUL.UU W0, #0, W0
+001158  BE9F80     MOV.D W0, [W15++]
+00115A  B83360     MUL.UU W6, #0, W6
+00115C  B82260     MUL.UU W4, #0, W4
+00115E  B81160     MUL.UU W2, #0, W2
+001160  EB0080     CLR W1
+001162  EB0000     CLR W0
+001164  07FC33     RCALL m_constructor
+001166  5787F8     SUB W15, #0x18, W15
+001168  780F00     MOV W0, [W14]
+162:                   float deter = m_determinant(m);
+00116A  90003E     MOV [W14+6], W0
+00116C  07FE73     RCALL m_determinant
+00116E  980710     MOV W0, [W14+2]
+001170  980721     MOV W1, [W14+4]
+163:                   temp = m_cofactor(m)->m_s_multiply(m_cofactor(m),1/deter);
+001172  90003E     MOV [W14+6], W0
+001174  07FEE7     RCALL m_cofactor
+001176  901D00     MOV [W0+48], W10
+001178  90011E     MOV [W14+2], W2
+00117A  9001AE     MOV [W14+4], W3
+00117C  200000     MOV #0x0, W0
+00117E  23F801     MOV #0x3F80, W1
+001180  07F952     RCALL 0x426
+001182  BE0400     MOV.D W0, W8
+001184  90003E     MOV [W14+6], W0
+001186  07FEDE     RCALL m_cofactor
+001188  BE0108     MOV.D W8, W2
+00118A  01000A     CALL W10
+00118C  780F00     MOV W0, [W14]
+164:                   return temp;
+00118E  78001E     MOV [W14], W0
+165:               }
+001190  78054F     MOV [--W15], W10
+001192  BE044F     MOV.D [--W15], W8
+001194  FA8000     ULNK
+001196  060000     RETURN
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/main.c  ------------------------------------------
+1:                 /******************************************************************************/
+2:                 /* Files to Include                                                           */
+3:                 /******************************************************************************/
+4:                 
+5:                 /* Device header file, thus actually include <p33FJ128MC804.h> */
+6:                 #if defined(__XC16__)
+7:                     #include <xc.h>
+8:                 #elif defined(__C30__)
+9:                     #if defined(__dsPIC33E__)
+10:                    	#include <p33Exxxx.h>
+11:                    #elif defined(__dsPIC33F__)
+12:                    	#include <p33Fxxxx.h>
+13:                    #endif
+14:                #endif
+15:                
+16:                //#include <p33FJ128MC804.h> 
+17:                #include "system.h"        /* System funct/params, like osc/peripheral config */
+18:                #include "user.h"          /* User funct/params, such as InitApp              */
+19:                
+20:                /* TODO DSPIC33FJ128MC804 Configuration Bit Settings*/
+21:                // 'C' source line config statements
+22:                // FBS
+23:                #pragma config BWRP = WRPROTECT_OFF     // Boot Segment Write Protect (Boot Segment may be written)
+24:                #pragma config BSS = NO_FLASH           // Boot Segment Program Flash Code Protection (No Boot program Flash segment)
+25:                #pragma config RBS = NO_RAM             // Boot Segment RAM Protection (No Boot RAM)
+26:                
+27:                // FSS
+28:                #pragma config SWRP = WRPROTECT_OFF     // Secure Segment Program Write Protect (Secure segment may be written)
+29:                #pragma config SSS = NO_FLASH           // Secure Segment Program Flash Code Protection (No Secure Segment)
+30:                #pragma config RSS = NO_RAM             // Secure Segment Data RAM Protection (No Secure RAM)
+31:                
+32:                // FGS
+33:                #pragma config GWRP = OFF               // General Code Segment Write Protect (User program memory is not write-protected)
+34:                #pragma config GSS = OFF                // General Segment Code Protection (User program memory is not code-protected)
+35:                
+36:                /*
+37:                _FOSCSEL(FNOSC_FRC);                                  // Select Internal FRC at POR
+38:                _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT);       // Enable Clock Switching and Configure Posc in XT mode
+39:                _FPOR(RST_PWMPIN & PWM1H_ACT_HI & PWM1L_ACT_HI);      // High and Low switches set to active-high state 
+40:                */
+41:                
+42:                // FOSCSEL
+43:                #pragma config FNOSC = PRI              // Primary Oscillator (XT, HS, EV))
+44:                #pragma config IESO = ON                // Internal External Switch Over Mode (Start-up device with FRC, then automatically switch to user-selected oscillator source when ready)
+45:                
+46:                // FOSC
+47:                #pragma config POSCMD = XT              // XT Oscillator Mode
+48:                #pragma config OSCIOFNC = OFF           // OSC2 Pin Function (OSC2 pin has clock out function)
+49:                #pragma config IOL1WAY = ON             // Peripheral Pin Select Configuration (Allow Only One Re-configuration)
+50:                #pragma config FCKSM = CSECMD           // This bit is extremely important? if set to CSDCMD there will be no PWM signal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+51:                //#pragma config FCKSM = CSDCMD         // Clock Switching and Monitor (Both Clock Switching and Fail-Safe Clock Monitor are disabled)
+52:                
+53:                // FWDT
+54:                #pragma config WDTPOST = PS32768        // Watchdog Timer Postscaler (1:32,768)
+55:                #pragma config WDTPRE = PR128           // WDT Prescaler (1:128)
+56:                #pragma config WINDIS = OFF             // Watchdog Timer Window (Watchdog Timer in Non-Window mode)
+57:                #pragma config FWDTEN = OFF             // Watchdog Timer Enable (Watchdog timer always enabled)
+58:                
+59:                // FPOR
+60:                #pragma config FPWRT = PWR128           // POR Timer Value (128ms)
+61:                #pragma config ALTI2C = OFF             // Alternate I2C  pins (I2C mapped to SDA1/SCL1 pins)
+62:                #pragma config LPOL = ON                // Motor Control PWM Low Side Polarity bit (PWM module low side output pins have active-high output polarity)
+63:                #pragma config HPOL = ON                // Motor Control PWM High Side Polarity bit (PWM module high side output pins have active-high output polarity)
+64:                #pragma config PWMPIN = OFF             // Motor Control PWM Module Pin Mode bit (PWM module pins controlled by PORT register at device Reset)
+65:                
+66:                // FICD
+67:                #pragma config ICS = PGD3               // Comm Channel Select (Communicate on PGC3/EMUC3 and PGD3/EMUD3)
+68:                #pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG is Disabled)
+69:                /******************************************************************************/
+70:                /* Global Variable Declaration                                                */
+71:                /******************************************************************************/
+72:                char ReceivedChar;
+73:                char TransmitChar;
+74:                bool go = 0;
+75:                bool stop = 0;
+76:                bool direction[3]={0,0,0};
+77:                /* i.e. uint16_t <variable_name>; */
+78:                /******************************************************************************/
+79:                /* Main Program                                                               */
+80:                /******************************************************************************/
+81:                int count[6]={0,0,0,0,0,0};
+82:                int motor[3]={0,0,0};
+83:                int i=0;
+84:                int countMatrix = 0;
+85:                int countVector = 0;
+86:                Matrix* pointerMatrix[];
+87:                Vector3f* pointerVector[];
+88:                Parameter P;
+89:                Matrix *Kp = NULL;
+90:                Matrix *Kd = NULL;
+91:                int main(void)
+92:                {   
+001198  FA0002     LNK #0x2
+00119A  BE9F88     MOV.D W8, [W15++]
+00119C  BE9F8A     MOV.D W10, [W15++]
+93:                    Kp = m_constructor(NULL, NULL, 6, 0, 0, 0, 6, 0, 0, 0, 6);
+00119E  200000     MOV #0x0, W0
+0011A0  240C01     MOV #0x40C0, W1
+0011A2  BE9F80     MOV.D W0, [W15++]
+0011A4  B80060     MUL.UU W0, #0, W0
+0011A6  BE9F80     MOV.D W0, [W15++]
+0011A8  B80060     MUL.UU W0, #0, W0
+0011AA  BE9F80     MOV.D W0, [W15++]
+0011AC  B80060     MUL.UU W0, #0, W0
+0011AE  BE9F80     MOV.D W0, [W15++]
+0011B0  200000     MOV #0x0, W0
+0011B2  240C01     MOV #0x40C0, W1
+0011B4  BE9F80     MOV.D W0, [W15++]
+0011B6  B80060     MUL.UU W0, #0, W0
+0011B8  BE9F80     MOV.D W0, [W15++]
+0011BA  B83360     MUL.UU W6, #0, W6
+0011BC  B82260     MUL.UU W4, #0, W4
+0011BE  200002     MOV #0x0, W2
+0011C0  240C03     MOV #0x40C0, W3
+0011C2  EB0080     CLR W1
+0011C4  EB0000     CLR W0
+0011C6  07FC02     RCALL m_constructor
+0011C8  5787F8     SUB W15, #0x18, W15
+0011CA  884050     MOV W0, Kp
+94:                    Kd = m_constructor(NULL, NULL, 10, 0, 0, 0, 10, 0, 0, 0, 10);
+0011CC  200000     MOV #0x0, W0
+0011CE  241201     MOV #0x4120, W1
+0011D0  BE9F80     MOV.D W0, [W15++]
+0011D2  B80060     MUL.UU W0, #0, W0
+0011D4  BE9F80     MOV.D W0, [W15++]
+0011D6  B80060     MUL.UU W0, #0, W0
+0011D8  BE9F80     MOV.D W0, [W15++]
+0011DA  B80060     MUL.UU W0, #0, W0
+0011DC  BE9F80     MOV.D W0, [W15++]
+0011DE  200000     MOV #0x0, W0
+0011E0  241201     MOV #0x4120, W1
+0011E2  BE9F80     MOV.D W0, [W15++]
+0011E4  B80060     MUL.UU W0, #0, W0
+0011E6  BE9F80     MOV.D W0, [W15++]
+0011E8  B83360     MUL.UU W6, #0, W6
+0011EA  B82260     MUL.UU W4, #0, W4
+0011EC  200002     MOV #0x0, W2
+0011EE  241203     MOV #0x4120, W3
+0011F0  EB0080     CLR W1
+0011F2  EB0000     CLR W0
+0011F4  07FBEB     RCALL m_constructor
+0011F6  5787F8     SUB W15, #0x18, W15
+0011F8  884060     MOV W0, Kd
+95:                    P.m = 35;
+0011FA  200000     MOV #0x0, W0
+0011FC  2420C1     MOV #0x420C, W1
+0011FE  884150     MOV W0, P
+001200  884161     MOV W1, 0x82C
+96:                    P.Iv = 1.35;
+001202  2CCCD0     MOV #0xCCCD, W0
+001204  23FAC1     MOV #0x3FAC, W1
+001206  884170     MOV W0, 0x82E
+001208  884181     MOV W1, 0x830
+97:                    P.r = 0.06;
+00120A  2C28F0     MOV #0xC28F, W0
+00120C  23D751     MOV #0x3D75, W1
+00120E  884190     MOV W0, 0x832
+001210  8841A1     MOV W1, 0x834
+98:                    P.Din = 0.147;
+001212  2872B0     MOV #0x872B, W0
+001214  23E161     MOV #0x3E16, W1
+001216  8841B0     MOV W0, 0x836
+001218  8841C1     MOV W1, 0x838
+99:                    P.Dout = 0.236;
+00121A  2A9FC0     MOV #0xA9FC, W0
+00121C  23E711     MOV #0x3E71, W1
+00121E  8841D0     MOV W0, 0x83A
+001220  8841E1     MOV W1, 0x83C
+100:                   P.La = (P.Din + P.Dout) / 2;
+001222  8041B4     MOV 0x836, W4
+001224  8041C5     MOV 0x838, W5
+001226  8041D0     MOV 0x83A, W0
+001228  8041E1     MOV 0x83C, W1
+00122A  BE0100     MOV.D W0, W2
+00122C  BE0004     MOV.D W4, W0
+00122E  07F89C     RCALL 0x368
+001230  200002     MOV #0x0, W2
+001232  240003     MOV #0x4000, W3
+001234  07F8F8     RCALL 0x426
+001236  8841F0     MOV W0, 0x83E
+001238  884201     MOV W1, 0x840
+101:                   P.I0 = 3.15 * pow(10, -5);
+00123A  21EDE0     MOV #0x1EDE, W0
+00123C  238041     MOV #0x3804, W1
+00123E  884210     MOV W0, 0x842
+001240  884221     MOV W1, 0x844
+102:                   P.kt = 0.0292;
+001242  234D70     MOV #0x34D7, W0
+001244  23CEF1     MOV #0x3CEF, W1
+001246  884230     MOV W0, 0x846
+001248  884241     MOV W1, 0x848
+103:                   P.kb = 1 / 34.34;
+00124A  28E3D0     MOV #0x8E3D, W0
+00124C  23CEE1     MOV #0x3CEE, W1
+00124E  884250     MOV W0, 0x84A
+001250  884261     MOV W1, 0x84C
+104:                   P.n = 186;
+001252  200000     MOV #0x0, W0
+001254  2433A1     MOV #0x433A, W1
+001256  884270     MOV W0, 0x84E
+001258  884281     MOV W1, 0x850
+105:                   P.b0 = 1.5 * pow(10, -4);
+00125A  249510     MOV #0x4951, W0
+00125C  2391D1     MOV #0x391D, W1
+00125E  884290     MOV W0, 0x852
+001260  8842A1     MOV W1, 0x854
+106:                   P.Ra = 0.61;
+001262  228F60     MOV #0x28F6, W0
+001264  23F1C1     MOV #0x3F1C, W1
+001266  8842B0     MOV W0, 0x856
+001268  8842C1     MOV W1, 0x858
+107:                   P.beta0 = pow(P.n, 2) * P.I0 / pow(P.r, 2);
+00126A  804270     MOV 0x84E, W0
+00126C  804281     MOV 0x850, W1
+00126E  BE0100     MOV.D W0, W2
+001270  07F95A     RCALL 0x526
+001272  BE0200     MOV.D W0, W4
+001274  804210     MOV 0x842, W0
+001276  804221     MOV 0x844, W1
+001278  BE0100     MOV.D W0, W2
+00127A  BE0004     MOV.D W4, W0
+00127C  07F954     RCALL 0x526
+00127E  BE0400     MOV.D W0, W8
+001280  804190     MOV 0x832, W0
+001282  8041A1     MOV 0x834, W1
+001284  BE0100     MOV.D W0, W2
+001286  07F94F     RCALL 0x526
+001288  BE0100     MOV.D W0, W2
+00128A  BE0008     MOV.D W8, W0
+00128C  07F8CC     RCALL 0x426
+00128E  8842D0     MOV W0, 0x85A
+001290  8842E1     MOV W1, 0x85C
+108:                   P.beta1 = pow(P.n, 2) * (P.b0 + P.kt*P.kb / P.Ra) / pow(P.r, 2);
+001292  804270     MOV 0x84E, W0
+001294  804281     MOV 0x850, W1
+001296  BE0100     MOV.D W0, W2
+001298  07F946     RCALL 0x526
+00129A  BE0400     MOV.D W0, W8
+00129C  80429A     MOV 0x852, W10
+00129E  8042AB     MOV 0x854, W11
+0012A0  804234     MOV 0x846, W4
+0012A2  804245     MOV 0x848, W5
+0012A4  804250     MOV 0x84A, W0
+0012A6  804261     MOV 0x84C, W1
+0012A8  BE0100     MOV.D W0, W2
+0012AA  BE0004     MOV.D W4, W0
+0012AC  07F93C     RCALL 0x526
+0012AE  BE0200     MOV.D W0, W4
+0012B0  8042B0     MOV 0x856, W0
+0012B2  8042C1     MOV 0x858, W1
+0012B4  BE0100     MOV.D W0, W2
+0012B6  BE0004     MOV.D W4, W0
+0012B8  07F8B6     RCALL 0x426
+0012BA  BE0100     MOV.D W0, W2
+0012BC  BE000A     MOV.D W10, W0
+0012BE  07F854     RCALL 0x368
+0012C0  BE0100     MOV.D W0, W2
+0012C2  BE0008     MOV.D W8, W0
+0012C4  07F930     RCALL 0x526
+0012C6  BE0400     MOV.D W0, W8
+0012C8  804190     MOV 0x832, W0
+0012CA  8041A1     MOV 0x834, W1
+0012CC  BE0100     MOV.D W0, W2
+0012CE  07F92B     RCALL 0x526
+0012D0  BE0100     MOV.D W0, W2
+0012D2  BE0008     MOV.D W8, W0
+0012D4  07F8A8     RCALL 0x426
+0012D6  8842F0     MOV W0, 0x85E
+0012D8  884301     MOV W1, 0x860
+109:                   P.beta2 = P.n*P.kt / P.r / P.Ra;
+0012DA  804274     MOV 0x84E, W4
+0012DC  804285     MOV 0x850, W5
+0012DE  804230     MOV 0x846, W0
+0012E0  804241     MOV 0x848, W1
+0012E2  BE0100     MOV.D W0, W2
+0012E4  BE0004     MOV.D W4, W0
+0012E6  07F91F     RCALL 0x526
+0012E8  BE0200     MOV.D W0, W4
+0012EA  804190     MOV 0x832, W0
+0012EC  8041A1     MOV 0x834, W1
+0012EE  BE0100     MOV.D W0, W2
+0012F0  BE0004     MOV.D W4, W0
+0012F2  07F899     RCALL 0x426
+0012F4  BE0200     MOV.D W0, W4
+0012F6  8042B0     MOV 0x856, W0
+0012F8  8042C1     MOV 0x858, W1
+0012FA  BE0100     MOV.D W0, W2
+0012FC  BE0004     MOV.D W4, W0
+0012FE  07F893     RCALL 0x426
+001300  884310     MOV W0, 0x862
+001302  884321     MOV W1, 0x864
+110:                   /* Configure the oscillator for the device */
+111:                   ConfigureOscillator();
+001304  070430     RCALL ConfigureOscillator
+112:                   /* Initialize IO ports and peripherals */
+113:                   InitApp();
+001306  0703C6     RCALL InitApp
+114:                   /* TODO <INSERT USER APPLICATION CODE HERE> */
+115:               
+116:                   while(1)
+117:                   {
+118:                       /*
+119:                       {
+120:                           unsigned int j=0;
+121:                           for(j=0;j<65535;j++);//int -32768--32767; unsigned int 0--65535
+122:                       }
+123:                       */
+124:                       int count = 0;
+001308  EB0000     CLR W0
+00130A  780F00     MOV W0, [W14]
+125:                       if(U1STAbits.PERR==1)
+00130C  801110     MOV U1STA, W0
+00130E  600068     AND W0, #0x8, W0
+001310  E00000     CP0 W0
+001312  320001     BRA Z, 0x1316
+126:                       {
+127:                           continue;
+001314  370029     BRA 0x1368
+128:                       }
+129:                       if(U1STAbits.OERR==1)
+001316  801110     MOV U1STA, W0
+001318  600062     AND W0, #0x2, W0
+00131A  E00000     CP0 W0
+00131C  320002     BRA Z, 0x1322
+130:                       {
+131:                           //LATAbits.LATA0=1;
+132:                           U1STAbits.OERR=0;
+00131E  A92222     BCLR U1STA, #1
+133:                           //receivedNumber++;
+134:                           continue;       //continue statement must be in a loop;
+001320  370023     BRA 0x1368
+135:                       }
+136:                       if(U1STAbits.URXDA==1)
+001322  801110     MOV U1STA, W0
+137:                       {   
+138:                           //LATAbits.LATA1=1;
+139:                       }
+140:                       motor_drive();
+001324  070022     RCALL motor_drive
+141:                       //release all dynamic memories
+142:                       for(count = 0; count <= countMatrix; count++)
+001326  EB0000     CLR W0
+001328  780F00     MOV W0, [W14]
+00132A  370008     BRA 0x133C
+00133A  E80F1E     INC [W14], [W14]
+00133C  804030     MOV countMatrix, W0
+00133E  78009E     MOV [W14], W1
+001340  508F80     SUB W1, W0, [W15]
+001342  34FFF4     BRA LE, 0x132C
+143:                       {
+144:                           m_destructor(pointerMatrix[count],1);
+00132C  78001E     MOV [W14], W0
+00132E  400080     ADD W0, W0, W1
+001330  208260     MOV #0x826, W0
+001332  408000     ADD W1, W0, W0
+001334  780010     MOV [W0], W0
+001336  B3C011     MOV.B #0x1, W1
+001338  07FBD5     RCALL m_destructor
+145:                       };
+146:                       for(count = 0; count <= countVector; count++)
+001344  EB0000     CLR W0
+001346  780F00     MOV W0, [W14]
+001348  370008     BRA 0x135A
+001358  E80F1E     INC [W14], [W14]
+00135A  804040     MOV countVector, W0
+00135C  78009E     MOV [W14], W1
+00135E  508F80     SUB W1, W0, [W15]
+001360  34FFF4     BRA LE, 0x134A
+147:                       {
+148:                           v_destructor(pointerVector[count],1);
+00134A  78001E     MOV [W14], W0
+00134C  400080     ADD W0, W0, W1
+00134E  208280     MOV #0x828, W0
+001350  408000     ADD W1, W0, W0
+001352  780010     MOV [W0], W0
+001354  B3C011     MOV.B #0x1, W1
+001356  07029D     RCALL v_destructor
+149:                       };
+150:                       countMatrix = 0;
+001362  EF2806     CLR countMatrix
+151:                       countVector = 0;
+001364  EF2808     CLR countVector
+152:               
+153:                   };
+001366  37FFD0     BRA 0x1308
+001368  37FFCF     BRA 0x1308
+154:               }
+155:               
+156:               void motor_drive(void)
+157:               {       
+00136A  FA0004     LNK #0x4
+158:                   if(stop){
+00136C  BFC803     MOV.B stop, WREG
+00136E  E00400     CP0.B W0
+001370  320003     BRA Z, 0x1378
+159:                   LATAbits.LATA0=1;
+001372  A802C4     BSET LATA, #0
+160:                   LATAbits.LATA4=1;
+001374  A882C4     BSET LATA, #4
+161:                   LATAbits.LATA8=1;
+001376  A802C5     BSET 0x2C5, #0
+162:                   }
+163:                   if(go){
+001378  BFC802     MOV.B go, WREG
+00137A  E00400     CP0.B W0
+00137C  320003     BRA Z, 0x1384
+164:                   LATAbits.LATA0=0;
+00137E  A902C4     BCLR LATA, #0
+165:                   LATAbits.LATA4=0;
+001380  A982C4     BCLR LATA, #4
+166:                   LATAbits.LATA8=0;
+001382  A902C5     BCLR 0x2C5, #0
+167:                   }
+168:               
+169:                   if(i==0)
+001384  804020     MOV i, W0
+001386  E00000     CP0 W0
+001388  3A0021     BRA NZ, 0x13CC
+170:                   {            
+171:                       motor[0] = count[0];
+00138A  8040A0     MOV count, W0
+00138C  884100     MOV W0, motor
+172:                       motor[0] = motor[0] & 0x00FF;
+00138E  804101     MOV motor, W1
+001390  200FF0     MOV #0xFF, W0
+001392  608000     AND W1, W0, W0
+001394  884100     MOV W0, motor
+173:                       motor[0] = motor[0] | (count[1]<<8);
+001396  804101     MOV motor, W1
+001398  8040B0     MOV 0x816, W0
+00139A  DD0048     SL W0, #8, W0
+00139C  700001     IOR W0, W1, W0
+00139E  884100     MOV W0, motor
+174:               
+175:                       motor[1] = count[2];
+0013A0  8040C0     MOV 0x818, W0
+0013A2  884110     MOV W0, 0x822
+176:                       motor[1] = motor[1] & 0x00FF;
+0013A4  804111     MOV 0x822, W1
+0013A6  200FF0     MOV #0xFF, W0
+0013A8  608000     AND W1, W0, W0
+0013AA  884110     MOV W0, 0x822
+177:                       motor[1] = motor[1] | (count[3]<<8);
+0013AC  804111     MOV 0x822, W1
+0013AE  8040D0     MOV 0x81A, W0
+0013B0  DD0048     SL W0, #8, W0
+0013B2  700001     IOR W0, W1, W0
+0013B4  884110     MOV W0, 0x822
+178:               
+179:                       motor[2] = count[4];
+0013B6  8040E0     MOV 0x81C, W0
+0013B8  884120     MOV W0, 0x824
+180:                       motor[2] = motor[2] & 0x00FF;
+0013BA  804121     MOV 0x824, W1
+0013BC  200FF0     MOV #0xFF, W0
+0013BE  608000     AND W1, W0, W0
+0013C0  884120     MOV W0, 0x824
+181:                       motor[2] = motor[2] | (count[5]<<8);
+0013C2  804121     MOV 0x824, W1
+0013C4  8040F0     MOV 0x81E, W0
+0013C6  DD0048     SL W0, #8, W0
+0013C8  700001     IOR W0, W1, W0
+0013CA  884120     MOV W0, 0x824
+182:                   }
+183:                   int j=0;
+0013CC  EB0000     CLR W0
+0013CE  780F00     MOV W0, [W14]
+184:                   for(j=0;j<3;j++)
+0013D0  EB0000     CLR W0
+0013D2  780F00     MOV W0, [W14]
+0013D4  370023     BRA 0x141C
+00141A  E80F1E     INC [W14], [W14]
+00141C  78001E     MOV [W14], W0
+00141E  500FE2     SUB W0, #0x2, [W15]
+001420  34FFDA     BRA LE, 0x13D6
+185:                   {
+186:                       int temp=0;
+0013D6  EB0000     CLR W0
+0013D8  980710     MOV W0, [W14+2]
+187:                       temp = motor[j] & 0x8000;
+0013DA  78001E     MOV [W14], W0
+0013DC  400080     ADD W0, W0, W1
+0013DE  208200     MOV #0x820, W0
+0013E0  408000     ADD W1, W0, W0
+0013E2  780090     MOV [W0], W1
+0013E4  280000     MOV #0x8000, W0
+0013E6  608000     AND W1, W0, W0
+0013E8  980710     MOV W0, [W14+2]
+188:                       if(temp)
+0013EA  90001E     MOV [W14+2], W0
+0013EC  E00000     CP0 W0
+0013EE  320011     BRA Z, 0x1412
+189:                       {
+190:                           motor[j]=motor[j] & 0x7fff ;
+0013F0  78001E     MOV [W14], W0
+0013F2  400080     ADD W0, W0, W1
+0013F4  208200     MOV #0x820, W0
+0013F6  408000     ADD W1, W0, W0
+0013F8  780090     MOV [W0], W1
+0013FA  27FFF0     MOV #0x7FFF, W0
+0013FC  608080     AND W1, W0, W1
+0013FE  78001E     MOV [W14], W0
+001400  400100     ADD W0, W0, W2
+001402  208200     MOV #0x820, W0
+001404  410000     ADD W2, W0, W0
+001406  780801     MOV W1, [W0]
+191:                           //motor[j]=~(motor[j]-1);
+192:                           direction[j]=0;
+001408  208100     MOV #0x810, W0
+00140A  40001E     ADD W0, [W14], W0
+00140C  EB4080     CLR.B W1
+00140E  784801     MOV.B W1, [W0]
+001410  370004     BRA 0x141A
+193:                       }else{direction[j]=1;}
+001412  208100     MOV #0x810, W0
+001414  40001E     ADD W0, [W14], W0
+001416  B3C011     MOV.B #0x1, W1
+001418  784801     MOV.B W1, [W0]
+194:                   }
+195:                   LATAbits.LATA1=direction[0];
+001422  208100     MOV #0x810, W0
+001424  784010     MOV.B [W0], W0
+001426  FB8000     ZE W0, W0
+001428  600061     AND W0, #0x1, W0
+00142A  400000     ADD W0, W0, W0
+00142C  801622     MOV LATA, W2
+00142E  2FFFD1     MOV #0xFFFD, W1
+001430  610081     AND W2, W1, W1
+001432  700001     IOR W0, W1, W0
+001434  881620     MOV W0, LATA
+196:                   LATAbits.LATA7=direction[1];
+001436  208110     MOV #0x811, W0
+001438  784010     MOV.B [W0], W0
+00143A  FB8000     ZE W0, W0
+00143C  600061     AND W0, #0x1, W0
+00143E  DD0047     SL W0, #7, W0
+001440  801622     MOV LATA, W2
+001442  2FF7F1     MOV #0xFF7F, W1
+001444  610081     AND W2, W1, W1
+001446  700001     IOR W0, W1, W0
+001448  881620     MOV W0, LATA
+197:                   LATAbits.LATA9=direction[2];
+00144A  208120     MOV #0x812, W0
+00144C  784010     MOV.B [W0], W0
+00144E  FB8000     ZE W0, W0
+001450  600061     AND W0, #0x1, W0
+001452  DD0049     SL W0, #9, W0
+001454  801622     MOV LATA, W2
+001456  2FDFF1     MOV #0xFDFF, W1
+001458  610081     AND W2, W1, W1
+00145A  700001     IOR W0, W1, W0
+00145C  881620     MOV W0, LATA
+198:                   P1DC1=(5*motor[0]/3);
+00145E  804100     MOV motor, W0
+001460  B90065     MUL.SU W0, #5, W0
+001462  780080     MOV W0, W1
+001464  200030     MOV #0x3, W0
+001466  780100     MOV W0, W2
+001468  090011     REPEAT #0x11
+00146A  D80082     DIV.SW W1, W2
+00146C  880EB0     MOV W0, P1DC1
+199:                   P1DC2=(5*motor[1]/3);
+00146E  804110     MOV 0x822, W0
+001470  B90065     MUL.SU W0, #5, W0
+001472  780080     MOV W0, W1
+001474  200030     MOV #0x3, W0
+001476  780100     MOV W0, W2
+001478  090011     REPEAT #0x11
+00147A  D80082     DIV.SW W1, W2
+00147C  880EC0     MOV W0, P1DC2
+200:                   P1DC3=(5*motor[2]/3);
+00147E  804120     MOV 0x824, W0
+001480  B90065     MUL.SU W0, #5, W0
+001482  780080     MOV W0, W1
+001484  200030     MOV #0x3, W0
+001486  780100     MOV W0, W2
+001488  090011     REPEAT #0x11
+00148A  D80082     DIV.SW W1, W2
+00148C  880ED0     MOV W0, P1DC3
+201:               }
+00148E  FA8000     ULNK
+001490  060000     RETURN
+202:               
+203:               void __attribute__((__interrupt__,auto_psv)) _U1RXInterrupt(void)
+204:               {
+001492  BE9F80     MOV.D W0, [W15++]
+001494  781F82     MOV W2, [W15++]
+001496  F80034     PUSH PSVPAG
+001498  200000     MOV #0x0, W0
+00149A  8801A0     MOV W0, PSVPAG
+00149C  FA0000     LNK #0x0
+205:                   ReceivedChar = U1RXREG;
+00149E  801130     MOV U1RXREG, W0
+0014A0  784000     MOV.B W0, W0
+0014A2  B7E800     MOV.B WREG, ReceivedChar
+206:                   
+207:                   if(ReceivedChar == 'g'){go = 1;}
+0014A4  208001     MOV #0x800, W1
+0014A6  784091     MOV.B [W1], W1
+0014A8  B3C670     MOV.B #0x67, W0
+0014AA  50CF80     SUB.B W1, W0, [W15]
+0014AC  3A0003     BRA NZ, 0x14B4
+0014AE  B3C010     MOV.B #0x1, W0
+0014B0  B7E802     MOV.B WREG, go
+0014B2  370021     BRA 0x14F6
+208:                   else if(ReceivedChar == 's'){stop = 1; go = 0;}
+0014B4  208001     MOV #0x800, W1
+0014B6  784091     MOV.B [W1], W1
+0014B8  B3C730     MOV.B #0x73, W0
+0014BA  50CF80     SUB.B W1, W0, [W15]
+0014BC  3A0004     BRA NZ, 0x14C6
+0014BE  B3C010     MOV.B #0x1, W0
+0014C0  B7E803     MOV.B WREG, stop
+0014C2  EF6802     CLR.B go
+0014C4  370018     BRA 0x14F6
+209:                   else 
+210:                   {
+211:                       
+212:                   if(ReceivedChar == 'u'){ U1TXREG = 'u'; i = 0;}
+0014C6  208001     MOV #0x800, W1
+0014C8  784091     MOV.B [W1], W1
+0014CA  B3C750     MOV.B #0x75, W0
+0014CC  50CF80     SUB.B W1, W0, [W15]
+0014CE  3A0004     BRA NZ, 0x14D8
+0014D0  200750     MOV #0x75, W0
+0014D2  881120     MOV W0, U1TXREG
+0014D4  EF2804     CLR i
+0014D6  37000F     BRA 0x14F6
+213:                   else
+214:                   {
+215:                       count[i] = ReceivedChar;
+0014D8  804020     MOV i, W0
+0014DA  208001     MOV #0x800, W1
+0014DC  784091     MOV.B [W1], W1
+0014DE  FB0081     SE W1, W1
+0014E0  400100     ADD W0, W0, W2
+0014E2  208140     MOV #0x814, W0
+0014E4  410000     ADD W2, W0, W0
+0014E6  780801     MOV W1, [W0]
+216:                       i++;
+0014E8  804020     MOV i, W0
+0014EA  E80000     INC W0, W0
+0014EC  884020     MOV W0, i
+217:                       if(i>=6) i = 0;
+0014EE  804020     MOV i, W0
+0014F0  500FE5     SUB W0, #0x5, [W15]
+0014F2  340001     BRA LE, 0x14F6
+0014F4  EF2804     CLR i
+218:                   }
+219:                   
+220:                   }
+221:                   
+222:                   IFS0bits.U1RXIF = 0;
+0014F6  A96085     BCLR 0x85, #3
+223:               }
+0014F8  FA8000     ULNK
+0014FA  F90034     POP PSVPAG
+0014FC  78014F     MOV [--W15], W2
+0014FE  BE004F     MOV.D [--W15], W0
+001500  064000     RETFIE
+224:               
+225:               void __attribute__((__interrupt__,auto_psv)) _U1TXInterrupt(void)
+226:               {
+001502  F80034     PUSH PSVPAG
+001504  781F88     MOV W8, [W15++]
+001506  200008     MOV #0x0, W8
+001508  8801A8     MOV W8, PSVPAG
+00150A  78044F     MOV [--W15], W8
+00150C  FA0000     LNK #0x0
+227:                   IFS0bits.U1TXIF = 0; // clear TX interrupt flag
+00150E  A98085     BCLR 0x85, #4
+228:                   //U1TXREG = 'b'; // Transmit one character
+229:                  
+230:               }
+001510  FA8000     ULNK
+001512  F90034     POP PSVPAG
+001514  064000     RETFIE
+---  /home/dracula/MPLABXProjects/dspic33_c_ultimate.X/controller.c  ------------------------------------
+1:                 /*
+2:                  * File:   controller.c
+3:                  * Author: dracula
+4:                  *
+5:                  * Created on January 6, 2017, 11:58 PM
+6:                  */
+7:                 
+8:                 //#include "xc.h"
+9:                 #include "user.h"
+10:                extern Parameter P;
+11:                extern Matrix *Kp;
+12:                extern Matrix *Kd;
+13:                Vector3f *OMRS_controller(Vector3f *qd, Vector3f *dqd, Vector3f *ddqd, Vector3f *q, Vector3f *dq)
+14:                {
+001516  FA0024     LNK #0x24
+001518  BE9F88     MOV.D W8, [W15++]
+00151A  BE9F8A     MOV.D W10, [W15++]
+00151C  BE9F8C     MOV.D W12, [W15++]
+00151E  980F30     MOV W0, [W14+22]
+001520  980F41     MOV W1, [W14+24]
+001522  980F52     MOV W2, [W14+26]
+001524  980F63     MOV W3, [W14+28]
+001526  980F74     MOV W4, [W14+30]
+15:                    Vector3f *temp;
+16:                    Vector3f *uavc;
+17:                    Matrix *Ravc = m_constructor(NULL, NULL, cos(q->z), -sin(q->z), 0, sin(q->z), cos(q->z), 0, 0, 0 ,1);
+001528  90086E     MOV [W14+28], W0
+00152A  9000D0     MOV [W0+10], W1
+00152C  900040     MOV [W0+8], W0
+00152E  07F779     RCALL 0x422
+001530  BE0600     MOV.D W0, W12
+001532  90086E     MOV [W14+28], W0
+001534  9000D0     MOV [W0+10], W1
+001536  900040     MOV [W0+8], W0
+001538  07F893     RCALL 0x660
+00153A  BE0500     MOV.D W0, W10
+00153C  90086E     MOV [W14+28], W0
+00153E  9000D0     MOV [W0+10], W1
+001540  900040     MOV [W0+8], W0
+001542  07F88E     RCALL 0x660
+001544  BE0400     MOV.D W0, W8
+001546  A2F009     BTG W9, #15
+001548  90086E     MOV [W14+28], W0
+00154A  9000D0     MOV [W0+10], W1
+00154C  900040     MOV [W0+8], W0
+00154E  07F769     RCALL 0x422
+001550  200002     MOV #0x0, W2
+001552  23F803     MOV #0x3F80, W3
+001554  BE9F82     MOV.D W2, [W15++]
+001556  B81160     MUL.UU W2, #0, W2
+001558  BE9F82     MOV.D W2, [W15++]
+00155A  B81160     MUL.UU W2, #0, W2
+00155C  BE9F82     MOV.D W2, [W15++]
+00155E  B81160     MUL.UU W2, #0, W2
+001560  BE9F82     MOV.D W2, [W15++]
+001562  BE9F8C     MOV.D W12, [W15++]
+001564  BE9F8A     MOV.D W10, [W15++]
+001566  B83360     MUL.UU W6, #0, W6
+001568  BE0208     MOV.D W8, W4
+00156A  BE0100     MOV.D W0, W2
+00156C  EB0080     CLR W1
+00156E  EB0000     CLR W0
+001570  07FA2D     RCALL m_constructor
+001572  5787F8     SUB W15, #0x18, W15
+001574  780F00     MOV W0, [W14]
+18:                    Matrix *DRavc = m_constructor(NULL, NULL, -sin(q->z)*dq->z, -cos(q->z)*dq->z, 0, cos(q->z)*dq->z, -sin(q->z)*dq->z, 0, 0, 0 ,0);
+001576  90086E     MOV [W14+28], W0
+001578  9000D0     MOV [W0+10], W1
+00157A  900040     MOV [W0+8], W0
+00157C  07F871     RCALL 0x660
+00157E  BE0200     MOV.D W0, W4
+001580  A2F005     BTG W5, #15
+001582  90087E     MOV [W14+30], W0
+001584  9000D0     MOV [W0+10], W1
+001586  900040     MOV [W0+8], W0
+001588  BE0100     MOV.D W0, W2
+00158A  BE0004     MOV.D W4, W0
+00158C  07F7CC     RCALL 0x526
+00158E  BE0600     MOV.D W0, W12
+001590  90086E     MOV [W14+28], W0
+001592  9000D0     MOV [W0+10], W1
+001594  900040     MOV [W0+8], W0
+001596  07F745     RCALL 0x422
+001598  BE0200     MOV.D W0, W4
+00159A  90087E     MOV [W14+30], W0
+00159C  9000D0     MOV [W0+10], W1
+00159E  900040     MOV [W0+8], W0
+0015A0  BE0100     MOV.D W0, W2
+0015A2  BE0004     MOV.D W4, W0
+0015A4  07F7C0     RCALL 0x526
+0015A6  BE0500     MOV.D W0, W10
+0015A8  90086E     MOV [W14+28], W0
+0015AA  9000D0     MOV [W0+10], W1
+0015AC  900040     MOV [W0+8], W0
+0015AE  07F739     RCALL 0x422
+0015B0  BE0200     MOV.D W0, W4
+0015B2  A2F005     BTG W5, #15
+0015B4  90087E     MOV [W14+30], W0
+0015B6  9000D0     MOV [W0+10], W1
+0015B8  900040     MOV [W0+8], W0
+0015BA  BE0100     MOV.D W0, W2
+0015BC  BE0004     MOV.D W4, W0
+0015BE  07F7B3     RCALL 0x526
+0015C0  BE0400     MOV.D W0, W8
+0015C2  90086E     MOV [W14+28], W0
+0015C4  9000D0     MOV [W0+10], W1
+0015C6  900040     MOV [W0+8], W0
+0015C8  07F84B     RCALL 0x660
+0015CA  BE0200     MOV.D W0, W4
+0015CC  A2F005     BTG W5, #15
+0015CE  90087E     MOV [W14+30], W0
+0015D0  9000D0     MOV [W0+10], W1
+0015D2  900040     MOV [W0+8], W0
+0015D4  BE0100     MOV.D W0, W2
+0015D6  BE0004     MOV.D W4, W0
+0015D8  07F7A6     RCALL 0x526
+0015DA  B81160     MUL.UU W2, #0, W2
+0015DC  BE9F82     MOV.D W2, [W15++]
+0015DE  B81160     MUL.UU W2, #0, W2
+0015E0  BE9F82     MOV.D W2, [W15++]
+0015E2  B81160     MUL.UU W2, #0, W2
+0015E4  BE9F82     MOV.D W2, [W15++]
+0015E6  B81160     MUL.UU W2, #0, W2
+0015E8  BE9F82     MOV.D W2, [W15++]
+0015EA  BE9F8C     MOV.D W12, [W15++]
+0015EC  BE9F8A     MOV.D W10, [W15++]
+0015EE  B83360     MUL.UU W6, #0, W6
+0015F0  BE0208     MOV.D W8, W4
+0015F2  BE0100     MOV.D W0, W2
+0015F4  EB0080     CLR W1
+0015F6  EB0000     CLR W0
+0015F8  07F9E9     RCALL m_constructor
+0015FA  5787F8     SUB W15, #0x18, W15
+0015FC  980710     MOV W0, [W14+2]
+19:                    Matrix *M2avc = m_constructor(NULL, NULL, 1.5*P.beta0 + P.m, 0, 0, 0, 1.5*P.beta0 + P.m, 0, 0, 0, 3*P.beta0*pow(P.La, 2) + P.Iv);
+0015FE  8042D0     MOV 0x85A, W0
+001600  8042E1     MOV 0x85C, W1
+001602  200002     MOV #0x0, W2
+001604  240403     MOV #0x4040, W3
+001606  07F78F     RCALL 0x526
+001608  BE0400     MOV.D W0, W8
+00160A  8041F0     MOV 0x83E, W0
+00160C  804201     MOV 0x840, W1
+00160E  BE0100     MOV.D W0, W2
+001610  07F78A     RCALL 0x526
+001612  BE0100     MOV.D W0, W2
+001614  BE0008     MOV.D W8, W0
+001616  07F787     RCALL 0x526
+001618  BE0200     MOV.D W0, W4
+00161A  804170     MOV 0x82E, W0
+00161C  804181     MOV 0x830, W1
+00161E  BE0100     MOV.D W0, W2
+001620  BE0004     MOV.D W4, W0
+001622  07F6A2     RCALL 0x368
+001624  BE0500     MOV.D W0, W10
+001626  8042D0     MOV 0x85A, W0
+001628  8042E1     MOV 0x85C, W1
+00162A  200002     MOV #0x0, W2
+00162C  23FC03     MOV #0x3FC0, W3
+00162E  07F77B     RCALL 0x526
+001630  BE0200     MOV.D W0, W4
+001632  804150     MOV P, W0
+001634  804161     MOV 0x82C, W1
+001636  BE0100     MOV.D W0, W2
+001638  BE0004     MOV.D W4, W0
+00163A  07F696     RCALL 0x368
+00163C  BE0400     MOV.D W0, W8
+00163E  8042D0     MOV 0x85A, W0
+001640  8042E1     MOV 0x85C, W1
+001642  200002     MOV #0x0, W2
+001644  23FC03     MOV #0x3FC0, W3
+001646  07F76F     RCALL 0x526
+001648  BE0200     MOV.D W0, W4
+00164A  804150     MOV P, W0
+00164C  804161     MOV 0x82C, W1
+00164E  BE0100     MOV.D W0, W2
+001650  BE0004     MOV.D W4, W0
+001652  07F68A     RCALL 0x368
+001654  BE9F8A     MOV.D W10, [W15++]
+001656  B81160     MUL.UU W2, #0, W2
+001658  BE9F82     MOV.D W2, [W15++]
+00165A  B81160     MUL.UU W2, #0, W2
+00165C  BE9F82     MOV.D W2, [W15++]
+00165E  B81160     MUL.UU W2, #0, W2
+001660  BE9F82     MOV.D W2, [W15++]
+001662  BE9F88     MOV.D W8, [W15++]
+001664  B81160     MUL.UU W2, #0, W2
+001666  BE9F82     MOV.D W2, [W15++]
+001668  B83360     MUL.UU W6, #0, W6
+00166A  B82260     MUL.UU W4, #0, W4
+00166C  BE0100     MOV.D W0, W2
+00166E  EB0080     CLR W1
+001670  EB0000     CLR W0
+001672  07F9AC     RCALL m_constructor
+001674  5787F8     SUB W15, #0x18, W15
+001676  980720     MOV W0, [W14+4]
+20:                    Matrix *C2avc = m_constructor(NULL, NULL, 1.5*P.beta1, -P.m*dq->z, 0, P.m*dq->z, 1.5*P.beta1, 0, 0, 0, 3*P.beta1*pow(P.La, 2));
+001678  8042F0     MOV 0x85E, W0
+00167A  804301     MOV 0x860, W1
+00167C  200002     MOV #0x0, W2
+00167E  240403     MOV #0x4040, W3
+001680  07F752     RCALL 0x526
+001682  BE0400     MOV.D W0, W8
+001684  8041F0     MOV 0x83E, W0
+001686  804201     MOV 0x840, W1
+001688  BE0100     MOV.D W0, W2
+00168A  07F74D     RCALL 0x526
+00168C  BE0100     MOV.D W0, W2
+00168E  BE0008     MOV.D W8, W0
+001690  07F74A     RCALL 0x526
+001692  BE0100     MOV.D W0, W2
+001694  981702     MOV W2, [W14+32]
+001696  981713     MOV W3, [W14+34]
+001698  8042F0     MOV 0x85E, W0
+00169A  804301     MOV 0x860, W1
+00169C  200002     MOV #0x0, W2
+00169E  23FC03     MOV #0x3FC0, W3
+0016A0  07F742     RCALL 0x526
+0016A2  BE0600     MOV.D W0, W12
+0016A4  804154     MOV P, W4
+0016A6  804165     MOV 0x82C, W5
+0016A8  90087E     MOV [W14+30], W0
+0016AA  9000D0     MOV [W0+10], W1
+0016AC  900040     MOV [W0+8], W0
+0016AE  BE0100     MOV.D W0, W2
+0016B0  BE0004     MOV.D W4, W0
+0016B2  07F739     RCALL 0x526
+0016B4  BE0500     MOV.D W0, W10
+0016B6  804150     MOV P, W0
+0016B8  804161     MOV 0x82C, W1
+0016BA  BE0200     MOV.D W0, W4
+0016BC  A2F005     BTG W5, #15
+0016BE  90087E     MOV [W14+30], W0
+0016C0  9000D0     MOV [W0+10], W1
+0016C2  900040     MOV [W0+8], W0
+0016C4  BE0100     MOV.D W0, W2
+0016C6  BE0004     MOV.D W4, W0
+0016C8  07F72E     RCALL 0x526
+0016CA  BE0400     MOV.D W0, W8
+0016CC  8042F0     MOV 0x85E, W0
+0016CE  804301     MOV 0x860, W1
+0016D0  200002     MOV #0x0, W2
+0016D2  23FC03     MOV #0x3FC0, W3
+0016D4  07F728     RCALL 0x526
+0016D6  90110E     MOV [W14+32], W2
+0016D8  90119E     MOV [W14+34], W3
+0016DA  BE9F82     MOV.D W2, [W15++]
+0016DC  B81160     MUL.UU W2, #0, W2
+0016DE  BE9F82     MOV.D W2, [W15++]
+0016E0  B81160     MUL.UU W2, #0, W2
+0016E2  BE9F82     MOV.D W2, [W15++]
+0016E4  B81160     MUL.UU W2, #0, W2
+0016E6  BE9F82     MOV.D W2, [W15++]
+0016E8  BE9F8C     MOV.D W12, [W15++]
+0016EA  BE9F8A     MOV.D W10, [W15++]
+0016EC  B83360     MUL.UU W6, #0, W6
+0016EE  BE0208     MOV.D W8, W4
+0016F0  BE0100     MOV.D W0, W2
+0016F2  EB0080     CLR W1
+0016F4  EB0000     CLR W0
+0016F6  07F96A     RCALL m_constructor
+0016F8  5787F8     SUB W15, #0x18, W15
+0016FA  980730     MOV W0, [W14+6]
+21:                    Matrix *RavcRev = m_constructor(NULL, NULL, cos(q->z), sin(q->z), 0, -sin(q->z), cos(q->z), 0, 0, 0, 1);
+0016FC  90086E     MOV [W14+28], W0
+0016FE  9000D0     MOV [W0+10], W1
+001700  900040     MOV [W0+8], W0
+001702  07F68F     RCALL 0x422
+001704  BE0600     MOV.D W0, W12
+001706  90086E     MOV [W14+28], W0
+001708  9000D0     MOV [W0+10], W1
+00170A  900040     MOV [W0+8], W0
+00170C  07F7A9     RCALL 0x660
+00170E  BE0500     MOV.D W0, W10
+001710  A2F00B     BTG W11, #15
+001712  90086E     MOV [W14+28], W0
+001714  9000D0     MOV [W0+10], W1
+001716  900040     MOV [W0+8], W0
+001718  07F7A3     RCALL 0x660
+00171A  BE0400     MOV.D W0, W8
+00171C  90086E     MOV [W14+28], W0
+00171E  9000D0     MOV [W0+10], W1
+001720  900040     MOV [W0+8], W0
+001722  07F67F     RCALL 0x422
+001724  200002     MOV #0x0, W2
+001726  23F803     MOV #0x3F80, W3
+001728  BE9F82     MOV.D W2, [W15++]
+00172A  B81160     MUL.UU W2, #0, W2
+00172C  BE9F82     MOV.D W2, [W15++]
+00172E  B81160     MUL.UU W2, #0, W2
+001730  BE9F82     MOV.D W2, [W15++]
+001732  B81160     MUL.UU W2, #0, W2
+001734  BE9F82     MOV.D W2, [W15++]
+001736  BE9F8C     MOV.D W12, [W15++]
+001738  BE9F8A     MOV.D W10, [W15++]
+00173A  B83360     MUL.UU W6, #0, W6
+00173C  BE0208     MOV.D W8, W4
+00173E  BE0100     MOV.D W0, W2
+001740  EB0080     CLR W1
+001742  EB0000     CLR W0
+001744  07F943     RCALL m_constructor
+001746  5787F8     SUB W15, #0x18, W15
+001748  980740     MOV W0, [W14+8]
+22:                    Matrix *Mavc = m_m_multiply(M2avc,RavcRev);
+00174A  9000CE     MOV [W14+8], W1
+00174C  90002E     MOV [W14+4], W0
+00174E  07FA5C     RCALL m_m_multiply
+001750  980750     MOV W0, [W14+10]
+23:                    Matrix *Cavc = m_minus(m_m_multiply(C2avc,RavcRev),m_m_multiply(M2avc,m_m_multiply(RavcRev,m_m_multiply(DRavc,RavcRev)))); 
+001752  9000CE     MOV [W14+8], W1
+001754  90001E     MOV [W14+2], W0
+001756  07FA58     RCALL m_m_multiply
+001758  780080     MOV W0, W1
+00175A  90004E     MOV [W14+8], W0
+00175C  07FA55     RCALL m_m_multiply
+00175E  780080     MOV W0, W1
+001760  90002E     MOV [W14+4], W0
+001762  07FA52     RCALL m_m_multiply
+001764  780400     MOV W0, W8
+001766  9000CE     MOV [W14+8], W1
+001768  90003E     MOV [W14+6], W0
+00176A  07FA4E     RCALL m_m_multiply
+00176C  780088     MOV W8, W1
+00176E  07FA08     RCALL m_minus
+001770  980760     MOV W0, [W14+12]
+24:                    Matrix *BavcOri = m_constructor(NULL, NULL, -0.5, -0.5, 1, 0.866, -0.866, 0, P.La, P.La, P.La);
+001772  8041F4     MOV 0x83E, W4
+001774  804205     MOV 0x840, W5
+001776  8041F2     MOV 0x83E, W2
+001778  804203     MOV 0x840, W3
+00177A  8041F0     MOV 0x83E, W0
+00177C  804201     MOV 0x840, W1
+00177E  BE9F84     MOV.D W4, [W15++]
+001780  BE9F82     MOV.D W2, [W15++]
+001782  BE9F80     MOV.D W0, [W15++]
+001784  B80060     MUL.UU W0, #0, W0
+001786  BE9F80     MOV.D W0, [W15++]
+001788  2B22D0     MOV #0xB22D, W0
+00178A  2BF5D1     MOV #0xBF5D, W1
+00178C  BE9F80     MOV.D W0, [W15++]
+00178E  2B22D0     MOV #0xB22D, W0
+001790  23F5D1     MOV #0x3F5D, W1
+001792  BE9F80     MOV.D W0, [W15++]
+001794  200006     MOV #0x0, W6
+001796  23F807     MOV #0x3F80, W7
+001798  200004     MOV #0x0, W4
+00179A  2BF005     MOV #0xBF00, W5
+00179C  200002     MOV #0x0, W2
+00179E  2BF003     MOV #0xBF00, W3
+0017A0  EB0080     CLR W1
+0017A2  EB0000     CLR W0
+0017A4  07F913     RCALL m_constructor
+0017A6  5787F8     SUB W15, #0x18, W15
+0017A8  980770     MOV W0, [W14+14]
+25:                    Matrix *Bavc = m_s_multiply(BavcOri,P.beta2);
+0017AA  804310     MOV 0x862, W0
+0017AC  804321     MOV 0x864, W1
+0017AE  BE0100     MOV.D W0, W2
+0017B0  90007E     MOV [W14+14], W0
+0017B2  07FB10     RCALL m_s_multiply
+0017B4  980F00     MOV W0, [W14+16]
+26:                    temp = m_v_multiply(m_inverse(Bavc),m_v_multiply(Mavc,v_minus(ddqd,v_plus(m_v_multiply(Kd,v_minus(dq,dqd)),m_v_multiply(Kp,v_minus(q,qd))))));
+0017B6  9008BE     MOV [W14+22], W1
+0017B8  90086E     MOV [W14+28], W0
+0017BA  07009E     RCALL v_minus
+0017BC  780080     MOV W0, W1
+0017BE  804050     MOV Kp, W0
+0017C0  07FA8E     RCALL m_v_multiply
+0017C2  780400     MOV W0, W8
+0017C4  9008CE     MOV [W14+24], W1
+0017C6  90087E     MOV [W14+30], W0
+0017C8  070097     RCALL v_minus
+0017CA  780080     MOV W0, W1
+0017CC  804060     MOV Kd, W0
+0017CE  07FA87     RCALL m_v_multiply
+0017D0  780088     MOV W8, W1
+0017D2  070069     RCALL v_plus
+0017D4  780080     MOV W0, W1
+0017D6  90085E     MOV [W14+26], W0
+0017D8  07008F     RCALL v_minus
+0017DA  780080     MOV W0, W1
+0017DC  90005E     MOV [W14+10], W0
+0017DE  07FA7F     RCALL m_v_multiply
+0017E0  780400     MOV W0, W8
+0017E2  90080E     MOV [W14+16], W0
+0017E4  07FCAA     RCALL m_inverse
+0017E6  780088     MOV W8, W1
+0017E8  07FA7A     RCALL m_v_multiply
+0017EA  980F10     MOV W0, [W14+18]
+27:                    uavc = v_plus(temp,m_v_multiply(m_m_multiply(m_inverse(Bavc),Cavc),dq));
+0017EC  90080E     MOV [W14+16], W0
+0017EE  07FCA5     RCALL m_inverse
+0017F0  9000EE     MOV [W14+12], W1
+0017F2  07FA0A     RCALL m_m_multiply
+0017F4  9008FE     MOV [W14+30], W1
+0017F6  07FA73     RCALL m_v_multiply
+0017F8  780080     MOV W0, W1
+0017FA  90081E     MOV [W14+18], W0
+0017FC  070054     RCALL v_plus
+0017FE  980F20     MOV W0, [W14+20]
+28:                    /*
+29:                    m_destructor(Ravc,1);
+30:                    m_destructor(DRavc,1); 
+31:                    m_destructor(M2avc,1);
+32:                    m_destructor(C2avc,1);
+33:                    m_destructor(RavcRev,1);
+34:                    m_destructor(Mavc,1);
+35:                    m_destructor(Cavc,1);
+36:                    m_destructor(BavcOri,1);
+37:                    m_destructor(Bavc,1);
+38:                    */
+39:                    return uavc;
+001800  90082E     MOV [W14+20], W0
+40:                }
+001802  BE064F     MOV.D [--W15], W12
+001804  BE054F     MOV.D [--W15], W10
+001806  BE044F     MOV.D [--W15], W8
+001808  FA8000     ULNK
+00180A  060000     RETURN
