@@ -19,9 +19,10 @@
 #include "user.h"            /* variables/params used by user.c               */
 
 #define FCY 40000000
-#define BAUDRATE 57600//9600  
+#define BAUDRATE 115200//57600//9600  
 #define BRGVAL ((FCY/BAUDRATE)/16)-1
-#define DELAY_105us ams volatile ("REPEAT,#4201");Nop();//105us delay 
+#define DELAY_105us asm volatile ("REPEAT,#4201");Nop();//105us delay 
+#define DELAY_10us asm volatile ("REPEAT,#401");Nop();//10us delay 
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -169,13 +170,12 @@ P1TCONbits.PTEN = 1;
 
 void UartInit(void)
 {
-    int i;
     U1MODEbits.STSEL = 0; // 1-stop bit
     U1MODEbits.PDSEL = 0; // No Parity, 8-data bits
     U1MODEbits.ABAUD = 0; // Auto-Baud Disabled
     U1MODEbits.BRGH = 0; // Low Speed mode
     U1MODEbits.LPBACK = 0;
-    U1BRG = BRGVAL; // BAUD Rate Setting for 9600
+    U1BRG = BRGVAL; // BAUD Rate Setting for 115200//57600//9600
     U1STAbits.UTXISEL0 = 0; // Interrupt after one Tx character is transmitted
     U1STAbits.UTXISEL1 = 0;
     U1STAbits.URXISEL = 0;
@@ -183,17 +183,7 @@ void UartInit(void)
     IEC0bits.U1RXIE = 1; // Enable UART Rx interrupt
     U1MODEbits.UARTEN = 1; // Enable UART
     U1STAbits.UTXEN = 1; // Enable UART Tx
-    /* wait at least 104 usec (1/9600) before sending first char */
+    /* wait at least 8.68 usec (1/115200) before sending first char */
     //DELAY_105us
-    for(i = 0; i < 4160; i++)
-    {
-    Nop();
-    }
-
-}
-
-void Delay(int i)
-{
-    int j=0;
-    for(j=0;j<i;j++);
+    DELAY_10us
 }

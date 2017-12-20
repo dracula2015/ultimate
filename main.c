@@ -13,115 +13,133 @@
     #endif
 #endif
 
-//#include <p33FJ128MC804.h> 
-#include "system.h"        /* System funct/params, like osc/peripheral config */
+#if defined(__XC16__)
+    //#include <p33FJ128MC804.h> 
+    #include "system.h"        /* System funct/params, like osc/peripheral config */
+
+    /* TODO DSPIC33FJ128MC804 Configuration Bit Settings*/
+    // 'C' source line config statements
+    // FBS
+    #pragma config BWRP = WRPROTECT_OFF     // Boot Segment Write Protect (Boot Segment may be written)
+    #pragma config BSS = NO_FLASH           // Boot Segment Program Flash Code Protection (No Boot program Flash segment)
+    #pragma config RBS = NO_RAM             // Boot Segment RAM Protection (No Boot RAM)
+
+    // FSS
+    #pragma config SWRP = WRPROTECT_OFF     // Secure Segment Program Write Protect (Secure segment may be written)
+    #pragma config SSS = NO_FLASH           // Secure Segment Program Flash Code Protection (No Secure Segment)
+    #pragma config RSS = NO_RAM             // Secure Segment Data RAM Protection (No Secure RAM)
+
+    // FGS
+    #pragma config GWRP = OFF               // General Code Segment Write Protect (User program memory is not write-protected)
+    #pragma config GSS = OFF                // General Segment Code Protection (User program memory is not code-protected)
+
+    /*
+    _FOSCSEL(FNOSC_FRC);                                  // Select Internal FRC at POR
+    _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT);       // Enable Clock Switching and Configure Posc in XT mode
+    _FPOR(RST_PWMPIN & PWM1H_ACT_HI & PWM1L_ACT_HI);      // High and Low switches set to active-high state 
+    */
+
+    // FOSCSEL
+    #pragma config FNOSC = PRI              // Primary Oscillator (XT, HS, EV))
+    #pragma config IESO = ON                // Internal External Switch Over Mode (Start-up device with FRC, then automatically switch to user-selected oscillator source when ready)
+
+    // FOSC
+    #pragma config POSCMD = XT              // XT Oscillator Mode
+    #pragma config OSCIOFNC = OFF           // OSC2 Pin Function (OSC2 pin has clock out function)
+    #pragma config IOL1WAY = ON             // Peripheral Pin Select Configuration (Allow Only One Re-configuration)
+    #pragma config FCKSM = CSECMD           // This bit is extremely important? if set to CSDCMD there will be no PWM signal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //#pragma config FCKSM = CSDCMD         // Clock Switching and Monitor (Both Clock Switching and Fail-Safe Clock Monitor are disabled)
+
+    // FWDT
+    #pragma config WDTPOST = PS32768        // Watchdog Timer Postscaler (1:32,768)
+    #pragma config WDTPRE = PR128           // WDT Prescaler (1:128)
+    #pragma config WINDIS = OFF             // Watchdog Timer Window (Watchdog Timer in Non-Window mode)
+    #pragma config FWDTEN = OFF             // Watchdog Timer Enable (Watchdog timer always enabled)
+
+    // FPOR
+    #pragma config FPWRT = PWR128           // POR Timer Value (128ms)
+    #pragma config ALTI2C = OFF             // Alternate I2C  pins (I2C mapped to SDA1/SCL1 pins)
+    #pragma config LPOL = ON                // Motor Control PWM Low Side Polarity bit (PWM module low side output pins have active-high output polarity)
+    #pragma config HPOL = ON                // Motor Control PWM High Side Polarity bit (PWM module high side output pins have active-high output polarity)
+    #pragma config PWMPIN = OFF             // Motor Control PWM Module Pin Mode bit (PWM module pins controlled by PORT register at device Reset)
+
+    // FICD
+    #pragma config ICS = PGD3               // Comm Channel Select (Communicate on PGC3/EMUC3 and PGD3/EMUD3)
+    #pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG is Disabled)
+#endif
+
 #include "user.h"          /* User funct/params, such as InitApp              */
+#define PI 3.1415926
 
-/* TODO DSPIC33FJ128MC804 Configuration Bit Settings*/
-// 'C' source line config statements
-// FBS
-#pragma config BWRP = WRPROTECT_OFF     // Boot Segment Write Protect (Boot Segment may be written)
-#pragma config BSS = NO_FLASH           // Boot Segment Program Flash Code Protection (No Boot program Flash segment)
-#pragma config RBS = NO_RAM             // Boot Segment RAM Protection (No Boot RAM)
-
-// FSS
-#pragma config SWRP = WRPROTECT_OFF     // Secure Segment Program Write Protect (Secure segment may be written)
-#pragma config SSS = NO_FLASH           // Secure Segment Program Flash Code Protection (No Secure Segment)
-#pragma config RSS = NO_RAM             // Secure Segment Data RAM Protection (No Secure RAM)
-
-// FGS
-#pragma config GWRP = OFF               // General Code Segment Write Protect (User program memory is not write-protected)
-#pragma config GSS = OFF                // General Segment Code Protection (User program memory is not code-protected)
-
-/*
-_FOSCSEL(FNOSC_FRC);                                  // Select Internal FRC at POR
-_FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT);       // Enable Clock Switching and Configure Posc in XT mode
-_FPOR(RST_PWMPIN & PWM1H_ACT_HI & PWM1L_ACT_HI);      // High and Low switches set to active-high state 
-*/
-
-// FOSCSEL
-#pragma config FNOSC = PRI              // Primary Oscillator (XT, HS, EV))
-#pragma config IESO = ON                // Internal External Switch Over Mode (Start-up device with FRC, then automatically switch to user-selected oscillator source when ready)
-
-// FOSC
-#pragma config POSCMD = XT              // XT Oscillator Mode
-#pragma config OSCIOFNC = OFF           // OSC2 Pin Function (OSC2 pin has clock out function)
-#pragma config IOL1WAY = ON             // Peripheral Pin Select Configuration (Allow Only One Re-configuration)
-#pragma config FCKSM = CSECMD           // This bit is extremely important? if set to CSDCMD there will be no PWM signal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//#pragma config FCKSM = CSDCMD         // Clock Switching and Monitor (Both Clock Switching and Fail-Safe Clock Monitor are disabled)
-
-// FWDT
-#pragma config WDTPOST = PS32768        // Watchdog Timer Postscaler (1:32,768)
-#pragma config WDTPRE = PR128           // WDT Prescaler (1:128)
-#pragma config WINDIS = OFF             // Watchdog Timer Window (Watchdog Timer in Non-Window mode)
-#pragma config FWDTEN = OFF             // Watchdog Timer Enable (Watchdog timer always enabled)
-
-// FPOR
-#pragma config FPWRT = PWR128           // POR Timer Value (128ms)
-#pragma config ALTI2C = OFF             // Alternate I2C  pins (I2C mapped to SDA1/SCL1 pins)
-#pragma config LPOL = ON                // Motor Control PWM Low Side Polarity bit (PWM module low side output pins have active-high output polarity)
-#pragma config HPOL = ON                // Motor Control PWM High Side Polarity bit (PWM module high side output pins have active-high output polarity)
-#pragma config PWMPIN = OFF             // Motor Control PWM Module Pin Mode bit (PWM module pins controlled by PORT register at device Reset)
-
-// FICD
-#pragma config ICS = PGD3               // Comm Channel Select (Communicate on PGC3/EMUC3 and PGD3/EMUD3)
-#pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG is Disabled)
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
+/* i.e. uint16_t <variable_name>; */
 char ReceivedChar;
 char TransmitChar;
 bool go = 0;
 bool stop = 0;
-bool direction[3]={0,0,0};
-/* i.e. uint16_t <variable_name>; */
+bool direction[3] = {0,0,0};
+
+int count[6] = {0,0,0,0,0,0};
+int motor[3] = {0,0,0};
+int i = 0;
+
+int counter = 0;
+int countMatrix = 0;
+int countVector = 0;
+int countMatrixGlobal = 0;
+int countVectorGlobal = 0;
+float triMatrix[3][3] = { 6,0,0,0,6,0,0,0,6 };
+clock_t initTime;
+clock_t realTime;
+
+Matrix* pointerMatrix[100];
+Vector3f* pointerVector[100];
+Matrix* pointerMatrixGlobal[100];
+Vector3f* pointerVectorGlobal[100];
+Parameter P;
+Matrix *Kp;
+Matrix *Kd;
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
-int count[6]={0,0,0,0,0,0};
-int motor[3]={0,0,0};
-int i=0;
-int countMatrix = 0;
-int countVector = 0;
-Matrix* pointerMatrix[];
-Vector3f* pointerVector[];
-Parameter P;
-Matrix *Kp = NULL;
-Matrix *Kd = NULL;
 int main(void)
 {   
-    Kp = m_constructor(NULL, NULL, 6, 0, 0, 0, 6, 0, 0, 0, 6);
-    Kd = m_constructor(NULL, NULL, 10, 0, 0, 0, 10, 0, 0, 0, 10);
-    P.m = 35;
-    P.Iv = 1.35;
-    P.r = 0.06;
-    P.Din = 0.147;
-    P.Dout = 0.236;
-    P.La = (P.Din + P.Dout) / 2;
-    P.I0 = 3.15 * pow(10, -5);
-    P.kt = 0.0292;
-    P.kb = 1 / 34.34;
-    P.n = 186;
-    P.b0 = 1.5 * pow(10, -4);
-    P.Ra = 0.61;
-    P.beta0 = pow(P.n, 2) * P.I0 / pow(P.r, 2);
-    P.beta1 = pow(P.n, 2) * (P.b0 + P.kt*P.kb / P.Ra) / pow(P.r, 2);
-    P.beta2 = P.n*P.kt / P.r / P.Ra;
     /* Configure the oscillator for the device */
     ConfigureOscillator();
     /* Initialize IO ports and peripherals */
     InitApp();
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-
+    Kp = m_constructor(global, NULL, NULL, 6, 0, 0, 0, 6, 0, 0, 0, 6);
+	Kd = m_constructor(global, NULL, NULL, 10, 0, 0, 0, 10, 0, 0, 0, 10);
+    Vector3f* qd = v_constructor(global, NULL, 0, 0, 0);
+	Vector3f* dqd = v_constructor(global, NULL, 0, 0, 0);
+	Vector3f* ddqd = v_constructor(global, NULL, 0, 0, 0);
+    Vector3f* q = v_constructor(global, NULL, 0, 0, 0);
+	Vector3f* dq = v_constructor(global, NULL, 0, 0, 0);
+    Vector3f* controlEffect;
+	Vector3f* ddq;
+    P.m = 11.4;
+	P.Iv = 0.65;
+	P.r = 0.05;
+	P.Din = 0.147;
+	P.Dout = 0.236;
+	//P.La = (P.Din + P.Dout) / 2;
+	P.La = 0.2425;
+	P.I0 = 6 * pow(10, -6);
+	P.kt = 0.0208;
+	//P.kb = 1 / 34.34;
+	P.kb = 0.02076;
+	P.n = 71;
+	P.b0 = 6.0 * pow(10, -5);
+	P.Ra = 1.53;
+	P.beta0 = pow(P.n, 2) * P.I0 / pow(P.r, 2);
+	P.beta1 = pow(P.n, 2) * (P.b0 + P.kt*P.kb / P.Ra) / pow(P.r, 2);
+	P.beta2 = P.n*P.kt / P.r / P.Ra;
+    initTime = clock();
     while(1)
     {
-        /*
-        {
-            unsigned int j=0;
-            for(j=0;j<65535;j++);//int -32768--32767; unsigned int 0--65535
-        }
-        */
-        int count = 0;
         if(U1STAbits.PERR==1)
         {
             continue;
@@ -137,21 +155,49 @@ int main(void)
         {   
             //LATAbits.LATA1=1;
         }
+        realTime = clock() - initTime;
+        qd->x = cos(realTime*PI / 15);
+		qd->y = sin(realTime*PI / 15);
+		qd->z = 0;
+        dqd->x = -PI/15*sin(realTime*PI / 15);
+		dqd->y = PI/15*cos(realTime*PI / 15);
+		dqd->z = 0;
+        ddqd->x = -pow(PI/15,2)*cos(realTime*PI / 15);
+		ddqd->y = -pow(PI/15,2)*sin(realTime*PI / 15);
+		ddqd->z = 0;
+        
+        controlEffect = OMRS_controller(qd, dqd, ddqd, q, dq);
+		ddq = OMRS_model(controlEffect, q, dq);
+        
         motor_drive();
-        //release all dynamic memories
-        for(count = 0; count <= countMatrix; count++)
-        {
-            m_destructor(pointerMatrix[count],1);
-        };
-        for(count = 0; count <= countVector; count++)
-        {
-            v_destructor(pointerVector[count],1);
-        };
-        countMatrix = 0;
-        countVector = 0;
-
+        /* release dynamically allocated local memory */
+        for (counter = 0; counter < countMatrix; counter++)
+		{
+			m_destructor(pointerMatrix[counter], 1);
+		};
+		for (counter = 0; counter < countVector; counter++)
+		{
+			v_destructor(pointerVector[counter], 1);
+		}
+		countMatrix = 0;
+		countVector = 0;
     };
+    /* release dynamically allocated global memory */
+    for (counter = 0; counter < countMatrixGlobal; counter++)
+	{
+		m_destructor(pointerMatrixGlobal[counter], 1);
+	};
+	for (counter = 0; counter < countVectorGlobal; counter++)
+	{
+		v_destructor(pointerVectorGlobal[counter], 1);
+	}
+	countMatrixGlobal = 0;
+	countVectorGlobal = 0;
+    
+    return 0;
 }
+
+#if defined(__XC16__)
 
 void motor_drive(void)
 {       
@@ -228,3 +274,5 @@ void __attribute__((__interrupt__,auto_psv)) _U1TXInterrupt(void)
     //U1TXREG = 'b'; // Transmit one character
    
 }
+
+#endif

@@ -9,39 +9,52 @@
 #ifndef XC_HEADER_VECTOR_H
 #define	XC_HEADER_VECTOR_H
 
-//#include <xc.h> // include processor files - each processor file is guarded.  
+#ifdef _WIN32
+    #define printDetail
+    #define printTimeConsumption
+#endif
 
+#define global true
+#define local false
 // TODO Insert appropriate #include <>
 
-// TODO Insert C++ class definitions if appropriate
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>        /* Includes int definition                    */
+#include <stdbool.h>       /* Includes true/false definition                  */
+#include <math.h>
+#include <time.h>
 //object oriented c
 
 typedef struct Vector3f
 {
     float x,y,z;
+
+	int thisVectorAddress;
+
+	bool globalVector;
     
-    struct Vector3f *(*v_constructor)(struct Vector3f*v, float x, float y, float z);
+    //struct Vector3f *(*v_constructor)(struct Vector3f*v, float x, float y, float z);
 
-    void (*v_destructor)(struct Vector3f*v, bool dynamic);
+    //void (*v_destructor)(struct Vector3f*v, bool dynamic);
 
-    struct Vector3f *(*v_plus)(struct Vector3f*v,struct Vector3f*w);
+    //struct Vector3f *(*v_plus)(struct Vector3f*v,struct Vector3f*w);
 
-    struct Vector3f *(*v_minus)(struct Vector3f*v,struct Vector3f*w);
+    //struct Vector3f *(*v_minus)(struct Vector3f*v,struct Vector3f*w);
 
-    float (*v_v_multiply)(struct Vector3f*v,struct Vector3f*w);
+    //float (*v_v_multiply)(struct Vector3f*v,struct Vector3f*w);
 
-    struct Vector3f *(*v_s_multiply)(struct Vector3f*v,float s);
+    //struct Vector3f *(*v_s_multiply)(struct Vector3f*v,float s);
 
-    struct Vector3f *(*v_equal)(struct Vector3f*v,struct Vector3f*w);
+    //struct Vector3f *(*v_equal)(struct Vector3f*v,struct Vector3f*w);
 
-    float (*v_length)(struct Vector3f*v);
+    //float (*v_length)(struct Vector3f*v);
 
-    void (*v_normalize)(struct Vector3f*v);
+    //void (*v_normalize)(struct Vector3f*v);
 }Vector3f;
 
 // TODO Insert declarations
-Vector3f *v_constructor(Vector3f*v, float x, float y, float z);
+Vector3f *v_constructor(bool globalVector, Vector3f*v, float x, float y, float z);
 
 void v_destructor(Vector3f*v, bool dynamic);
 
@@ -58,8 +71,6 @@ Vector3f *v_equal(Vector3f*v,Vector3f*w);
 float v_length(Vector3f*v);
 
 void v_normalize(Vector3f*v);
+// TODO Insert declarations
 
-// Comment a function and leverage automatic documentation with slash star star
-
-// TODO Insert declarations or function prototypes (right here) to leverage live documentation
 #endif
