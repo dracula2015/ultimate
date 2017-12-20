@@ -14,6 +14,8 @@
     #define printTimeConsumption
 #endif
 
+#define DELAY_105us asm volatile ("REPEAT,#4201");Nop();//105us delay 
+#define DELAY_10us asm volatile ("REPEAT,#401");Nop();//10us delay 
 #define global true
 #define local false
 // TODO Insert appropriate #include <>

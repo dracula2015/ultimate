@@ -21,8 +21,6 @@
 #define FCY 40000000
 #define BAUDRATE 115200//57600//9600  
 #define BRGVAL ((FCY/BAUDRATE)/16)-1
-#define DELAY_105us asm volatile ("REPEAT,#4201");Nop();//105us delay 
-#define DELAY_10us asm volatile ("REPEAT,#401");Nop();//10us delay 
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -42,10 +40,11 @@ void InitApp(void)
     // (See Table 30-1)
     //*************************************************************
     //*******************************
-    // Assign U1Rx To Pin RP0
+    // Assign U1Rx To Pin RP20
     //***************************
     //RPINR18bits.U1RXR = 0;
-    RPINR18bits.U1RXR = 4;
+//    RPINR18bits.U1RXR = 4;
+    RPINR18bits.U1RXR = 20;
     
     //***************************
     // Assign U1CTS To Pin RP1
@@ -57,10 +56,11 @@ void InitApp(void)
     // (See Table 30-2)
     //*************************************************************
     //***************************
-    // Assign U1Tx To Pin RP2
+    // Assign U1Tx To Pin RP4
     //***************************
     //RPOR1bits.RP2R = 3;
-    RPOR0bits.RP0R = 3;
+//    RPOR0bits.RP0R = 3;
+    RPOR2bits.RP4R = 3;
 
     //***************************
     // Assign U1RTS To Pin RP3
