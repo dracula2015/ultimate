@@ -74,34 +74,36 @@
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
-/* i.e. uint16_t <variable_name>; */
-char ReceivedChar;
-char TransmitChar;
-bool go = 0;
-bool stop = 0;
-bool direction[3] = {0,0,0};
+#if defined(__XC16__)
+    /* i.e. uint16_t <variable_name>; */
+    char ReceivedChar;
+    char TransmitChar;
+    bool go = 0;
+    bool stop = 0;
+    bool direction[3] = {0,0,0};
 
-int count[6] = {0,0,0,0,0,0};
-int motor[3] = {0,0,0};
-int i = 0;
+    int count[6] = {0,0,0,0,0,0};
+    int motor[3] = {0,0,0};
+    int i = 0;
+    int debugPause = 0;
+#endif
 
-int counter = 0;
-int countMatrix = 0;
-int countVector = 0;
-int countMatrixGlobal = 0;
-int countVectorGlobal = 0;
+extern int countMatrix;
+extern int countMatrixGlobal;
+extern int countVector;
+extern int countVectorGlobal;
 float triMatrix[3][3] = { 6,0,0,0,6,0,0,0,6 };
-clock_t initTime;
-clock_t realTime;
-int debugPause = 0;
 
-Matrix* pointerMatrix[100];
-Vector3f* pointerVector[100];
-Matrix* pointerMatrixGlobal[100];
-Vector3f* pointerVectorGlobal[100];
+extern Vector3f *pointerVector[];
+extern Vector3f *pointerVectorGlobal[];
+extern Matrix *pointerMatrix[];
+extern Matrix *pointerMatrixGlobal[];
+
 Parameter P;
 Matrix *Kp;
 Matrix *Kd;
+clock_t initTime;
+clock_t realTime;
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
@@ -166,93 +168,75 @@ int main(void)
 //        ddqd->x = -pow(PI/15,2)*cos(realTime*PI / 15);
 //		ddqd->y = -pow(PI/15,2)*sin(realTime*PI / 15);
 //		ddqd->z = 0;
-        //while(!debugPause);
-//        U1TXREG = countMatrix;
-//        U1TXREG = countVector;
-//        U1TXREG = countMatrixGlobal;
-//        U1TXREG = countVectorGlobal;
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
+        while(!debugPause);
+        U1TXREG = countMatrix;
+        U1TXREG = countVector;
+        U1TXREG = countMatrixGlobal;
+        U1TXREG = countVectorGlobal;
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
         controlEffect = OMRS_controller(qd, dqd, ddqd, q, dq);
 		ddq = OMRS_model(controlEffect, q, dq);
-//        U1TXREG = countMatrix;
-//        U1TXREG = countVector;
-//        U1TXREG = countMatrixGlobal;
-//        U1TXREG = countVectorGlobal;
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*controlEffect->x))>>24;
-//        U1TXREG =  ((long)(1000*controlEffect->x))>>16;
-//        U1TXREG =  ((long)(1000*controlEffect->x))>>8;
-//        U1TXREG =  ((long)(1000*controlEffect->x));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*controlEffect->y))>>24;
-//        U1TXREG =  ((long)(1000*controlEffect->y))>>16;
-//        U1TXREG =  ((long)(1000*controlEffect->y))>>8;
-//        U1TXREG =  ((long)(1000*controlEffect->y));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*controlEffect->z))>>24;
-//        U1TXREG =  ((long)(1000*controlEffect->z))>>16;
-//        U1TXREG =  ((long)(1000*controlEffect->z))>>8;
-//        U1TXREG =  ((long)(1000*controlEffect->z));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*ddq->x))>>24;
-//        U1TXREG =  ((long)(1000*ddq->x))>>16;
-//        U1TXREG =  ((long)(1000*ddq->x))>>8;
-//        U1TXREG =  ((long)(1000*ddq->x));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*ddq->y))>>24;
-//        U1TXREG =  ((long)(1000*ddq->y))>>16;
-//        U1TXREG =  ((long)(1000*ddq->y))>>8;
-//        U1TXREG =  ((long)(1000*ddq->y));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
-//        U1TXREG =  ((long)(1000*ddq->z))>>24;
-//        U1TXREG =  ((long)(1000*ddq->z))>>16;
-//        U1TXREG =  ((long)(1000*ddq->z))>>8;
-//        U1TXREG =  ((long)(1000*ddq->z));
-//        DELAY_105us
-//        DELAY_105us
-//        DELAY_105us
+        U1TXREG = countMatrix;
+        U1TXREG = countVector;
+        U1TXREG = countMatrixGlobal;
+        U1TXREG = countVectorGlobal;
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*controlEffect->x))>>24;
+        U1TXREG =  ((long)(1000*controlEffect->x))>>16;
+        U1TXREG =  ((long)(1000*controlEffect->x))>>8;
+        U1TXREG =  ((long)(1000*controlEffect->x));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*controlEffect->y))>>24;
+        U1TXREG =  ((long)(1000*controlEffect->y))>>16;
+        U1TXREG =  ((long)(1000*controlEffect->y))>>8;
+        U1TXREG =  ((long)(1000*controlEffect->y));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*controlEffect->z))>>24;
+        U1TXREG =  ((long)(1000*controlEffect->z))>>16;
+        U1TXREG =  ((long)(1000*controlEffect->z))>>8;
+        U1TXREG =  ((long)(1000*controlEffect->z));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*ddq->x))>>24;
+        U1TXREG =  ((long)(1000*ddq->x))>>16;
+        U1TXREG =  ((long)(1000*ddq->x))>>8;
+        U1TXREG =  ((long)(1000*ddq->x));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*ddq->y))>>24;
+        U1TXREG =  ((long)(1000*ddq->y))>>16;
+        U1TXREG =  ((long)(1000*ddq->y))>>8;
+        U1TXREG =  ((long)(1000*ddq->y));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
+        U1TXREG =  ((long)(1000*ddq->z))>>24;
+        U1TXREG =  ((long)(1000*ddq->z))>>16;
+        U1TXREG =  ((long)(1000*ddq->z))>>8;
+        U1TXREG =  ((long)(1000*ddq->z));
+        DELAY_105us
+        DELAY_105us
+        DELAY_105us
 //        motor_drive();
         /* release dynamically allocated local memory */
-        for (counter = 0; counter < countMatrix; counter++)
-		{
-			m_destructor(pointerMatrix[counter], 1);
-		};
-		for (counter = 0; counter < countVector; counter++)
-		{
-			v_destructor(pointerVector[counter], 1);
-		}
-		countMatrix = 0;
-		countVector = 0;
+        freeLocalMem();
         
         debugPause = 0;
     };
     /* release dynamically allocated global memory */
-    for (counter = 0; counter < countMatrixGlobal; counter++)
-	{
-		m_destructor(pointerMatrixGlobal[counter], 1);
-	};
-	for (counter = 0; counter < countVectorGlobal; counter++)
-	{
-		v_destructor(pointerVectorGlobal[counter], 1);
-	}
-	countMatrixGlobal = 0;
-	countVectorGlobal = 0;
+    freeGlobalMem();
     
     return 0;
 }
@@ -317,11 +301,11 @@ void __attribute__((__interrupt__,auto_psv)) _U1RXInterrupt(void)
     if(ReceivedChar == 'u')
     {
 //        U1TXREG = 'u'; i = 0;
-        U1TXREG = clock()>>24;
-        U1TXREG = clock()>>16;
-        U1TXREG = clock()>>8;
-        U1TXREG = clock();
-//        debugPause = 1;
+//        U1TXREG = clock()>>24;
+//        U1TXREG = clock()>>16;
+//        U1TXREG = clock()>>8;
+//        U1TXREG = clock();
+        debugPause = 1;
     }
     else
     {

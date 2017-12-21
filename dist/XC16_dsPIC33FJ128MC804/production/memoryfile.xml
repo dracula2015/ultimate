@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/XC16_dsPIC33FJ128MC804/production/dspic33_c_ultimate.X.production.elf">
+  <executable name="dist/XC16_dsPIC33FJ128MC804/production/ultimate.production.elf">
     <memory name="data">
       <units>bytes</units>
       <length>16384</length>
@@ -11,8 +11,8 @@
     <memory name="program">
       <units>bytes</units>
       <length>131328</length>
-      <used>11472</used>
-      <free>119856</free>
+      <used>12612</used>
+      <free>118716</free>
     </memory>
   </executable>
 </project>

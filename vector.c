@@ -6,10 +6,17 @@
  */
 
 #include "user.h"
-extern int countVector;
-extern int countVectorGlobal;
-extern Vector3f *pointerVector[];
-extern Vector3f *pointerVectorGlobal[];
+
+int memFreeCount = 0;
+int countMatrix = 0;
+int countVector = 0;
+int countMatrixGlobal = 0;
+int countVectorGlobal = 0;
+
+Matrix* pointerMatrix[100];
+Matrix* pointerMatrixGlobal[100];
+Vector3f* pointerVector[100];
+Vector3f* pointerVectorGlobal[100];
 
 void v_destructor(Vector3f*v, bool dynamic)
 {
@@ -95,4 +102,32 @@ Vector3f *v_constructor(bool globalVector, Vector3f*v, float x, float y, float z
     //v->v_length = v_length;
     //v->v_normalize = v_normalize;
     return v;
+}
+
+void freeLocalMem(void)
+{
+    for (memFreeCount = 0; memFreeCount < countMatrix; memFreeCount++)
+    {
+        m_destructor(pointerMatrix[memFreeCount], 1);
+    };
+    for (memFreeCount = 0; memFreeCount < countVector; memFreeCount++)
+    {
+        v_destructor(pointerVector[memFreeCount], 1);
+    }
+    countMatrix = 0;
+    countVector = 0;
+}
+
+void freeGlobalMem(void)
+{
+    for (memFreeCount = 0; memFreeCount < countMatrixGlobal; memFreeCount++)
+	{
+		m_destructor(pointerMatrixGlobal[memFreeCount], 1);
+	};
+	for (memFreeCount = 0; memFreeCount < countVectorGlobal; memFreeCount++)
+	{
+		v_destructor(pointerVectorGlobal[memFreeCount], 1);
+	}
+	countMatrixGlobal = 0;
+	countVectorGlobal = 0;
 }

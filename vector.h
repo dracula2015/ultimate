@@ -75,4 +75,8 @@ float v_length(Vector3f*v);
 void v_normalize(Vector3f*v);
 // TODO Insert declarations
 
+void freeLocalMem(void);
+
+void freeGlobalMem(void);
+
 #endif
