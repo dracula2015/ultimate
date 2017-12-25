@@ -10,9 +10,9 @@ CND_CONF=XC16_dsPIC33FJ128MC804
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/ultimate.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=ultimate.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=ultimate/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_c_ultimate.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=dspic33_c_ultimate.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=dspic33cultimate.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/ultimate/bin
+makeDirectory ${TMPDIR}/dspic33cultimate.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/ultimate.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/dspic33cultimate.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/ultimate.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/dspic33cultimate.x.tar *
 checkReturnCode
 
 # Cleanup
